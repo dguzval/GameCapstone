@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://jc00soarpg78"]
+
+[ext_resource type="Texture2D" uid="uid://848pf7wl55up" path="res://assets/sprites/tiles.png" id="1_amwqv"]
+[ext_resource type="Script" uid="uid://vr23y5x22bo0" path="res://scripts/gravity_button.gd" id="1_xor2m"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xor2m"]
+atlas = ExtResource("1_amwqv")
+region = Rect2(160, 140, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lvb1b"]
+atlas = ExtResource("1_amwqv")
+region = Rect2(180, 140, 20, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_w8hn3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xor2m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lvb1b")
+}],
+"loop": true,
+"name": &"pressed",
+"speed": 2.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6lwtt"]
+radius = 3.0
+
+[node name="Vertical_Gravity_Button" type="Area2D"]
+script = ExtResource("1_xor2m")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_w8hn3")
+animation = &"pressed"
+frame_progress = 0.78386253
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 3)
+shape = SubResource("CircleShape2D_6lwtt")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
