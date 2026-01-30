@@ -15,14 +15,12 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		if(gravity_vector == Vector2.UP):
 			velocity.y = -JUMP_VELOCITY
-			animated_sprite.flip_v = true
 			print("jumped_down")
 		elif(gravity_vector == Vector2.DOWN):
 			velocity.y = JUMP_VELOCITY
-			animated_sprite.flip_v = false
 
 
-	#get the input directoin: -1, 0, 1
+	#get the input direction: -1, 0, 1
 	var direction := Input.get_axis("move_left", "move_right")
 		
 	#Flip the Sprite/Character
@@ -47,3 +45,16 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
+
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if(body.is_in_group("Movable_Box")):
+		body.collision_layer = 1
+		body.collision_mask = 1
+		
+
+
+func _on_area_2d_body_exited(body: Node2D) -> void:
+	if(body.is_in_group("Movable_Box")):
+		body.collision_layer = 2
+		body.collision_mask = 2

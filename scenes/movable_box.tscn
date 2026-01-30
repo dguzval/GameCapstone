@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cmtfdxgm11ycy"]
+
+[ext_resource type="Script" uid="uid://p4lgrtbu3hso" path="res://scripts/movable_box.gd" id="1_oufvn"]
+[ext_resource type="Texture2D" uid="uid://btrecpgg83m6c" path="res://assets/sprites/1px/7.png" id="1_psasx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_psasx"]
+size = Vector2(16, 16)
+
+[node name="Movable_Box" type="RigidBody2D" groups=["Movable_Box"]]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_oufvn")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -1)
+texture = ExtResource("1_psasx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_psasx")
