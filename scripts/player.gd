@@ -2,10 +2,11 @@ extends CharacterBody2D
 
 
 const SPEED = 130.0
-const JUMP_VELOCITY = -300.0
+const JUMP_VELOCITY = -250.0
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
- 
+@onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
+
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	var gravity_vector = PhysicsServer2D.area_get_param(get_viewport().find_world_2d().space, PhysicsServer2D.AREA_PARAM_GRAVITY_VECTOR)
