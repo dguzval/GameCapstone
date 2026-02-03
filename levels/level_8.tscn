@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://cachxjghflyg4"]
+[gd_scene load_steps=13 format=3 uid="uid://cachxjghflyg4"]
 
 [ext_resource type="Texture2D" uid="uid://d0gloldhpxhx3" path="res://assets/sprites/Space Cave Tileset.png" id="1_nv17p"]
+[ext_resource type="Script" uid="uid://y5hnu01wejs1" path="res://scripts/level_8.gd" id="1_qnp4g"]
 [ext_resource type="Texture2D" uid="uid://b0xcfhha4enuj" path="res://assets/sprites/SpaceStationAda/SpaceStation_Tileset.png" id="2_d2r7i"]
 [ext_resource type="Texture2D" uid="uid://ddtdnhc0bcksb" path="res://assets/sprites/SpaceStationAda/SpaceStation_Objects.png" id="3_jemk5"]
 [ext_resource type="PackedScene" uid="uid://bwd1lp5fanqat" path="res://scenes/player.tscn" id="4_qfafa"]
@@ -370,6 +371,7 @@ sources/1 = SubResource("TileSetAtlasSource_lyvi1")
 sources/2 = SubResource("TileSetAtlasSource_3ajl4")
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_qnp4g")
 
 [node name="TileMap" type="TileMap" parent="."]
 rotation = -0.0014578537
