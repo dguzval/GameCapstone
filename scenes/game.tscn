@@ -308,6 +308,7 @@ scale = Vector2(-1, 1)
 
 [node name="Movable_Box" parent="." instance=ExtResource("8_gee14")]
 position = Vector2(104, 52)
+gravity_scale = 2.5
 
 [node name="Vertical_Gravity_Button" parent="." instance=ExtResource("7_u5sy4")]
 position = Vector2(280, 37)
