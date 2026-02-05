@@ -3,6 +3,7 @@ extends CharacterBody2D
 
 const SPEED = 130.0
 const JUMP_VELOCITY = -250.0
+const PUSH_FORCE = 30.0
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
@@ -46,16 +47,8 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
-
-
-func _on_area_2d_body_entered(body: Node2D) -> void:
-	if(body.is_in_group("Movable_Box")):
-		body.collision_layer = 1
-		body.collision_mask = 1
-		
-
-
-func _on_area_2d_body_exited(body: Node2D) -> void:
-	if(body.is_in_group("Movable_Box")):
-		body.collision_layer = 2
-		body.collision_mask = 2
+	
+	for i in get_slide_collision_count():
+		var c = get_slide_collision(i)
+		if c.get_collider() is RigidBody2D:
+			c.get_collider().apply_central_impulse(-c.get_normal() * PUSH_FORCE)
