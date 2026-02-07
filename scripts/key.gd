@@ -4,6 +4,14 @@ extends Area2D
 @onready var collision : CollisionShape2D = $CollisionShape2D
 @onready var animated_sprite : AnimatedSprite2D = $AnimatedSprite2D
 
+func _ready() -> void:
+	
+	if(!LevelState.key_required):
+		exit._update_locked_state()
+		LevelState.key_required = true
+		
+	LevelState.amount_key += 1
+
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		print("collected key")

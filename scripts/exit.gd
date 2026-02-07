@@ -29,6 +29,7 @@ func _on_body_entered(body: Node2D) -> void:
 
 func _go_to_next_level(path: String) -> void:
 	get_tree().change_scene_to_file(path)
+	LevelState.reset_for_level()
 
 func _update_locked_state() -> void:
 	call_deferred("_update_exit_access")
