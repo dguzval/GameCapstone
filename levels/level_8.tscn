@@ -390,12 +390,13 @@ zoom = Vector2(1.5, 1.5)
 position = Vector2(258, 48)
 scale = Vector2(-1, 1)
 
-[node name="Vertical_Gravity_Button" parent="." instance=ExtResource("6_er61b")]
+[node name="Gravity_Button" parent="." instance=ExtResource("6_er61b")]
 position = Vector2(472, 73)
 
-[node name="Vertical_Gravity_Button2" parent="." instance=ExtResource("6_er61b")]
+[node name="Gravity_Button2" parent="." instance=ExtResource("6_er61b")]
 position = Vector2(38, -105)
 rotation = 3.1415927
+gravity_change = "DOWN"
 
 [node name="Key" parent="." instance=ExtResource("7_d2r7i")]
 position = Vector2(266, -40)

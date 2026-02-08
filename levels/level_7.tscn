@@ -399,3 +399,4 @@ position = Vector2(24, 10)
 [node name="Vertical_Gravity_Button2" parent="." instance=ExtResource("7_kom4y")]
 position = Vector2(232, -10)
 rotation = 3.1415927
+gravity_change = "DOWN"

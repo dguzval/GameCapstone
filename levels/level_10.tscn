@@ -389,7 +389,7 @@ zoom = Vector2(1.5, 1.5)
 position = Vector2(465, -32)
 scale = Vector2(-1, 1)
 
-[node name="Vertical_Gravity_Button" parent="." instance=ExtResource("6_2jtav")]
+[node name="Gravity_Button" parent="." instance=ExtResource("6_2jtav")]
 position = Vector2(167, -54)
 
 [node name="Movable_Box" parent="." instance=ExtResource("7_lfnxh")]
