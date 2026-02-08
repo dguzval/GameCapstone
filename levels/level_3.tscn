@@ -389,5 +389,5 @@ zoom = Vector2(1.5, 1.5)
 position = Vector2(479, 51)
 scale = Vector2(-1, 1)
 
-[node name="Vertical_Gravity_Button" parent="." instance=ExtResource("6_glcy0")]
+[node name="Gravity_Button" parent="." instance=ExtResource("6_glcy0")]
 position = Vector2(234, 9)

@@ -389,7 +389,7 @@ zoom = Vector2(1.5, 1.5)
 [node name="Exit" parent="." instance=ExtResource("5_pq2nb")]
 position = Vector2(367, -48)
 
-[node name="Vertical_Gravity_Button" parent="." instance=ExtResource("6_0cb17")]
+[node name="Gravity_Button" parent="." instance=ExtResource("6_0cb17")]
 position = Vector2(440, 26)
 
 [node name="Movable_Box" parent="." instance=ExtResource("7_63owy")]
@@ -398,6 +398,7 @@ position = Vector2(144, 33)
 [node name="Key" parent="." instance=ExtResource("8_dgdix")]
 position = Vector2(77, -30)
 
-[node name="Vertical_Gravity_Button2" parent="." instance=ExtResource("6_0cb17")]
+[node name="Gravity_Button2" parent="." instance=ExtResource("6_0cb17")]
 position = Vector2(456, -106)
 rotation = 3.1415927
+gravity_change = "DOWN"

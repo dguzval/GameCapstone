@@ -20,16 +20,33 @@ func _physics_process(delta: float) -> void:
 			print("jumped_down")
 		elif(gravity_vector == Vector2.DOWN):
 			velocity.y = JUMP_VELOCITY
+		elif(gravity_vector == Vector2.RIGHT):
+			velocity.x = JUMP_VELOCITY
+		elif(gravity_vector == Vector2.LEFT):
+			velocity.x = -JUMP_VELOCITY
 
 
 	#get the input direction: -1, 0, 1
 	var direction := Input.get_axis("move_left", "move_right")
 		
-	#Flip the Sprite/Character
-	if direction > 0:
+	# Determine movement direction relative to gravity
+	var move_dir := 0
+
+	if gravity_vector == Vector2.DOWN:
+		move_dir = sign(velocity.x)
+	elif gravity_vector == Vector2.UP:
+		move_dir = -sign(velocity.x)   # reversed because player is upside down
+	elif gravity_vector == Vector2.RIGHT:
+		move_dir = -sign(velocity.y)
+	elif gravity_vector == Vector2.LEFT:
+		move_dir = sign(velocity.y)   # reversed because player is rotated
+
+	# Apply flipping
+	if move_dir > 0:
 		animated_sprite.flip_h = false
-	elif direction < 0:
+	elif move_dir < 0:
 		animated_sprite.flip_h = true
+
 		
 	#Play Animation
 	if is_on_floor():
@@ -42,9 +59,16 @@ func _physics_process(delta: float) -> void:
 	
 	#Apply movement
 	if direction:
-		velocity.x = direction * SPEED
+		if(gravity_vector == Vector2.UP || gravity_vector == Vector2.DOWN):
+			velocity.x = direction * SPEED
+		else:
+			velocity.y = direction * SPEED
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+		if(gravity_vector == Vector2.UP || gravity_vector == Vector2.DOWN):
+			velocity.x = move_toward(velocity.x, 0, SPEED)
+		else: 
+			velocity.y = move_toward(velocity.y, 0, SPEED)
+
 
 	move_and_slide()
 	
