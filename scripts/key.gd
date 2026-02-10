@@ -23,4 +23,12 @@ func _on_body_entered(body: Node2D) -> void:
 			exit._update_locked_state()
 		
 func _update_key_access(): 
-	collision.set_disabled(true)
+	collision.set_disabled(!collision.is_disabled())
+
+func _update_key_state():
+	call_deferred("_update_key_access")
+	animated_sprite.visible = false
+	
+	if (LevelState.all_plates_pressed):
+		animated_sprite.visible = true
+		

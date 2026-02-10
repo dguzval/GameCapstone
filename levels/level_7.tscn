@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://ddtdnhc0bcksb" path="res://assets/sprites/SpaceStationAda/SpaceStation_Objects.png" id="4_qtcaf"]
 [ext_resource type="PackedScene" uid="uid://bwd1lp5fanqat" path="res://scenes/player.tscn" id="5_mko0i"]
 [ext_resource type="PackedScene" uid="uid://dtr3ohuvqa1he" path="res://scenes/exit.tscn" id="6_m5dop"]
-[ext_resource type="PackedScene" uid="uid://jc00soarpg78" path="res://scenes/vertical_gravity_button.tscn" id="7_kom4y"]
+[ext_resource type="PackedScene" uid="uid://jc00soarpg78" path="res://scenes/gravity_button.tscn" id="7_kom4y"]
 [ext_resource type="PackedScene" uid="uid://fu6rst85qduv" path="res://scenes/key.tscn" id="8_ou8n7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w0414"]
