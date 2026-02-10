@@ -1,13 +1,13 @@
 [gd_scene load_steps=8 format=3 uid="uid://dg5e7emarlxh7"]
 
-[ext_resource type="Texture2D" uid="uid://ca4680hch3nq5" path="res://assets/sprites/atlas.png" id="1_ct5vs"]
+[ext_resource type="Texture2D" uid="uid://mmp2aoiyqmwj" path="res://assets/sprites/atlas.png" id="1_ct5vs"]
 [ext_resource type="Script" uid="uid://bma7rsngu0lc1" path="res://scripts/pressure_plate.gd" id="1_xtofl"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xtofl"]
 atlas = ExtResource("1_ct5vs")
 region = Rect2(112, 112, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ct5vs"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_r34r6"]
 atlas = ExtResource("1_ct5vs")
 region = Rect2(112, 96, 16, 16)
 
@@ -23,7 +23,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ct5vs")
+"texture": SubResource("AtlasTexture_r34r6")
 }],
 "loop": true,
 "name": &"unpressed",
@@ -42,7 +42,7 @@ script = ExtResource("1_xtofl")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_xtofl")
-animation = &"unpressed"
+animation = &"pressed"
 autoplay = "unpressed"
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
