@@ -6,7 +6,7 @@
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_oufvn"]
 friction = 0.25
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_psasx"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oufvn"]
 size = Vector2(16, 16)
 
 [node name="Movable_Box" type="RigidBody2D" groups=["Movable_Box"]]
@@ -16,6 +16,7 @@ mass = 5.0
 physics_material_override = SubResource("PhysicsMaterial_oufvn")
 can_sleep = false
 lock_rotation = true
+continuous_cd = 1
 linear_damp = 0.03
 angular_damp = 1.0
 script = ExtResource("1_oufvn")
@@ -28,4 +29,4 @@ texture = ExtResource("2_oufvn")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)
 scale = Vector2(2, 2)
-shape = SubResource("RectangleShape2D_psasx")
+shape = SubResource("RectangleShape2D_oufvn")

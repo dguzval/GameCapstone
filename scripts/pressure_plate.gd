@@ -15,12 +15,11 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") or body.is_in_group("Movable_Box"):
 		pressed = true
 		$AnimatedSprite2D.play("pressed")
-		emit_signal("pressed")
 		items_on_plate += 1
 		LevelState.plates_pressed += 1
 		LevelState.check_plates_pressed()
 		
-		if(LevelState.all_plates_pressed && !LevelState.has_key):
+		if(LevelState.all_plates_pressed && !key.is_claimed):
 			key._update_key_state()
 		
 		
@@ -34,11 +33,9 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 		LevelState.plates_pressed -= 1
 	if (items_on_plate <= 0):
 		pressed = false
-		$AnimatedSprite2D.play("unpressed")
-		emit_signal("released")
-		
+		$AnimatedSprite2D.play("unpressed")		
 	LevelState.check_plates_pressed()
-	if(!LevelState.all_plates_pressed && !LevelState.has_key):
+	if(!LevelState.all_plates_pressed && !key.is_claimed):
 		key._update_key_state()
 		
 func update_plate_direction(gravity_vector: Vector2):
