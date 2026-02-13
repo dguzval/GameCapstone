@@ -1,7 +1,8 @@
 [gd_scene load_steps=13 format=3 uid="uid://q0iifjevlag6"]
 
-[ext_resource type="Script" uid="uid://c1nx7f2isqwkb" path="res://teleporter.gd" id="1_pce0k"]
+[ext_resource type="Script" uid="uid://c1nx7f2isqwkb" path="res://scripts/teleporter.gd" id="1_pce0k"]
 [ext_resource type="Texture2D" uid="uid://b4rmo4cfvbhpv" path="res://assets/Dark Blue Portal Sprite Sheet.png" id="2_hkm18"]
+
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_67rw7"]
 atlas = ExtResource("2_hkm18")

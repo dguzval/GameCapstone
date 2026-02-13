@@ -3,6 +3,7 @@ extends Area2D
 @onready var exit : Area2D = $"../Exit"
 @onready var collision : CollisionShape2D = $CollisionShape2D
 @onready var animated_sprite : AnimatedSprite2D = $AnimatedSprite2D
+var is_claimed = false
 
 func _ready() -> void:
 	
@@ -14,7 +15,7 @@ func _ready() -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
-		print("collected key")
+		is_claimed = true
 		animated_sprite.visible = false
 		call_deferred("_update_key_access")
 		LevelState.update_key_count()
