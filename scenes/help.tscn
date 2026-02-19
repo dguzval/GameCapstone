@@ -1,0 +1,423 @@
+[gd_scene load_steps=31 format=3 uid="uid://bqclbqn84glrq"]
+
+[ext_resource type="Script" uid="uid://dwkv01owwm11v" path="res://scripts/help.gd" id="1_0ylyn"]
+[ext_resource type="Shader" uid="uid://b1aornhnpw4er" path="res://scripts/pause_menu.gdshader" id="1_ci552"]
+[ext_resource type="Texture2D" uid="uid://d2m55du7arjcf" path="res://assets/ui_graphics/1 Frames/FrameMap.png" id="2_50phg"]
+[ext_resource type="FontFile" uid="uid://p4sudry53o6x" path="res://assets/ui_graphics/10 Font/CyberpunkCraftpixPixel.otf" id="3_2by0i"]
+[ext_resource type="Texture2D" uid="uid://c04nl5goav4or" path="res://assets/ui_graphics/6 Buttons/Buttons2.png" id="4_oar4r"]
+[ext_resource type="Texture2D" uid="uid://uvxlte8mh2l" path="res://assets/ui_graphics/1 Frames/Frame_01.png" id="5_2c3wl"]
+[ext_resource type="Texture2D" uid="uid://clafoxy7yjs5d" path="res://assets/ui_graphics/1 Frames/Frame_05.png" id="6_hq4sr"]
+[ext_resource type="Texture2D" uid="uid://btavg8bvrm8yw" path="res://assets/ui_graphics/1 Frames/Frame_13.png" id="7_i3xxq"]
+[ext_resource type="Texture2D" uid="uid://cx1mjjp2goqb5" path="res://assets/ui_graphics/1 Frames/Frame_14.png" id="8_0eisp"]
+[ext_resource type="Texture2D" uid="uid://b2m75pyv364ho" path="res://assets/ui_graphics/1 Frames/Frame_16.png" id="9_tbbma"]
+[ext_resource type="Texture2D" uid="uid://bvbb862bwjyhs" path="res://assets/ui_graphics/1 Frames/Frame_19.png" id="10_oclsq"]
+[ext_resource type="Texture2D" uid="uid://glopl60y26wj" path="res://assets/ui_graphics/1 Frames/Frame_26.png" id="11_0eisp"]
+[ext_resource type="Texture2D" uid="uid://d0d2v4aakl3gj" path="res://assets/ui_graphics/1 Frames/Frame_17.png" id="12_4t21m"]
+[ext_resource type="Texture2D" uid="uid://dd5vqtourkn6q" path="res://assets/ui_graphics/1 Frames/Frame_21.png" id="13_u6nf5"]
+[ext_resource type="Texture2D" uid="uid://wx0ap2tgthsp" path="res://assets/ui_graphics/1 Frames/Frame_15.png" id="14_jlusn"]
+[ext_resource type="Texture2D" uid="uid://dd04263ctjwja" path="res://assets/ui_graphics/1 Frames/Frame_06.png" id="15_0ylyn"]
+[ext_resource type="Texture2D" uid="uid://smpjh0668f3x" path="res://assets/ui_graphics/1 Frames/Frame_22.png" id="16_3yy26"]
+[ext_resource type="Texture2D" uid="uid://b1ry8t52tqhut" path="res://assets/ui_graphics/1 Frames/Frame_29.png" id="17_jlusn"]
+[ext_resource type="Texture2D" uid="uid://b3th1c5t4s5f8" path="res://assets/ui_graphics/1 Frames/Frame_02.png" id="18_0ylyn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_50phg"]
+shader = ExtResource("1_ci552")
+shader_parameter/lod = 0.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_chmrd"]
+texture = ExtResource("2_50phg")
+texture_margin_left = 5.0
+texture_margin_top = 6.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+region_rect = Rect2(1, 165, 93, 86)
+
+[sub_resource type="Animation" id="Animation_n87rw"]
+resource_name = "blur"
+length = 0.3
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/lod")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(0, -0.15, 0, 0.15, 0, 0.8, -0.050000004, -0.13333334, 0, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PanelContainer:modulate:r")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0, 1, -0.050000004, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PanelContainer:modulate:g")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0, 1, -0.050000004, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PanelContainer:modulate:b")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0, 1, -0.050000004, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("PanelContainer:modulate:a")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(0, -0.15, 0, 0.15, 0, 1, -0.050000004, -0.16666667, 0, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+
+[sub_resource type="Animation" id="Animation_myx47"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/lod")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PanelContainer:modulate:r")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PanelContainer:modulate:g")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PanelContainer:modulate:b")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("PanelContainer:modulate:a")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_myx47"]
+_data = {
+&"RESET": SubResource("Animation_myx47"),
+&"blur": SubResource("Animation_n87rw")
+}
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2c3wl"]
+texture = ExtResource("4_oar4r")
+texture_margin_left = 2.0
+texture_margin_top = 3.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+region_rect = Rect2(1, 1, 14, 14)
+modulate_color = Color(1, 0.13333334, 0.13333334, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hq4sr"]
+texture = ExtResource("4_oar4r")
+texture_margin_left = 2.0
+texture_margin_top = 3.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+region_rect = Rect2(1, 17, 14, 14)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_k347r"]
+texture = ExtResource("4_oar4r")
+texture_margin_left = 2.0
+texture_margin_top = 3.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+region_rect = Rect2(1, 1, 14, 14)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jlusn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0ylyn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3yy26"]
+
+[node name="help" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0ylyn")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+texture_filter = 1
+material = SubResource("ShaderMaterial_50phg")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -384.0
+offset_top = -215.5
+offset_right = 384.0
+offset_bottom = 215.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -158.0
+offset_top = -94.5
+offset_right = 158.0
+offset_bottom = 94.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_chmrd")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+size_flags_stretch_ratio = 5.66
+alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+process_mode = 3
+libraries = {
+&"": SubResource("AnimationLibrary_myx47")
+}
+
+[node name="close" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -45.0
+offset_top = 80.0
+offset_right = 45.0
+offset_bottom = 106.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3_2by0i")
+theme_override_styles/normal = SubResource("StyleBoxTexture_2c3wl")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_hq4sr")
+theme_override_styles/hover = SubResource("StyleBoxTexture_k347r")
+text = "close"
+
+[node name="Frame01" type="Sprite2D" parent="."]
+position = Vector2(-154, -89)
+texture = ExtResource("5_2c3wl")
+
+[node name="Frame05" type="Sprite2D" parent="."]
+position = Vector2(-154, -57)
+texture = ExtResource("6_hq4sr")
+
+[node name="Frame13" type="Sprite2D" parent="."]
+position = Vector2(-154, 7)
+texture = ExtResource("7_i3xxq")
+
+[node name="Frame15" type="Sprite2D" parent="."]
+position = Vector2(-154, 39)
+texture = ExtResource("7_i3xxq")
+
+[node name="Frame17" type="Sprite2D" parent="."]
+position = Vector2(-154, 71)
+texture = ExtResource("7_i3xxq")
+
+[node name="Frame14" type="Sprite2D" parent="."]
+position = Vector2(-154, -25)
+texture = ExtResource("8_0eisp")
+
+[node name="Frame16" type="Sprite2D" parent="."]
+position = Vector2(-124, 103)
+texture = ExtResource("9_tbbma")
+
+[node name="Frame19" type="Sprite2D" parent="."]
+position = Vector2(-154, 88)
+texture = ExtResource("10_oclsq")
+
+[node name="Frame26" type="Sprite2D" parent="."]
+position = Vector2(-92, 103)
+texture = ExtResource("11_0eisp")
+
+[node name="Frame18" type="Sprite2D" parent="."]
+position = Vector2(-61, 103)
+texture = ExtResource("12_4t21m")
+
+[node name="Frame20" type="Sprite2D" parent="."]
+position = Vector2(60.5, 100)
+scale = Vector2(0.96875, 1)
+texture = ExtResource("9_tbbma")
+
+[node name="Frame27" type="Sprite2D" parent="."]
+position = Vector2(92, 100)
+texture = ExtResource("11_0eisp")
+
+[node name="Frame21" type="Sprite2D" parent="."]
+position = Vector2(124, 100)
+texture = ExtResource("12_4t21m")
+
+[node name="Frame22" type="Sprite2D" parent="."]
+position = Vector2(154, 84)
+texture = ExtResource("13_u6nf5")
+
+[node name="Frame23" type="Sprite2D" parent="."]
+position = Vector2(154, 52)
+texture = ExtResource("14_jlusn")
+
+[node name="Frame06" type="Sprite2D" parent="."]
+position = Vector2(154, 20)
+texture = ExtResource("15_0ylyn")
+
+[node name="Frame24" type="Sprite2D" parent="."]
+position = Vector2(154, -11)
+texture = ExtResource("16_3yy26")
+
+[node name="Frame25" type="Sprite2D" parent="."]
+position = Vector2(154, -43)
+texture = ExtResource("16_3yy26")
+
+[node name="Frame28" type="Sprite2D" parent="."]
+position = Vector2(154, -75)
+texture = ExtResource("16_3yy26")
+
+[node name="Frame29" type="Sprite2D" parent="."]
+position = Vector2(154, -89)
+texture = ExtResource("17_jlusn")
+
+[node name="Frame30" type="Sprite2D" parent="."]
+position = Vector2(124, -89)
+texture = ExtResource("9_tbbma")
+
+[node name="Frame02" type="Sprite2D" parent="."]
+position = Vector2(93, -89)
+texture = ExtResource("18_0ylyn")
+
+[node name="Frame03" type="Sprite2D" parent="."]
+position = Vector2(61.5, -89)
+scale = Vector2(1.15625, 1)
+texture = ExtResource("18_0ylyn")
+
+[node name="Frame04" type="Sprite2D" parent="."]
+position = Vector2(28, -89)
+texture = ExtResource("18_0ylyn")
+
+[node name="Frame07" type="Sprite2D" parent="."]
+position = Vector2(-3, -89)
+texture = ExtResource("18_0ylyn")
+
+[node name="Frame08" type="Sprite2D" parent="."]
+position = Vector2(-35, -89)
+texture = ExtResource("18_0ylyn")
+
+[node name="Frame09" type="Sprite2D" parent="."]
+position = Vector2(-66, -89)
+texture = ExtResource("18_0ylyn")
+
+[node name="Frame10" type="Sprite2D" parent="."]
+position = Vector2(-97, -89)
+texture = ExtResource("18_0ylyn")
+
+[node name="Frame11" type="Sprite2D" parent="."]
+position = Vector2(-127, -89)
+texture = ExtResource("18_0ylyn")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = -144.0
+offset_top = -83.0
+offset_right = 146.0
+offset_bottom = -57.0
+theme_override_fonts/font = ExtResource("3_2by0i")
+theme_override_font_sizes/font_size = 24
+text = "Help Center"
+horizontal_alignment = 1
+
+[node name="TextEdit" type="TextEdit" parent="."]
+layout_mode = 0
+offset_left = -146.0
+offset_top = -53.0
+offset_right = 147.0
+offset_bottom = 78.0
+theme_override_fonts/font = ExtResource("3_2by0i")
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jlusn")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0ylyn")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_3yy26")
+text = "KEYBINDS:
+A / Left Arrow -  Left
+D / Right Arrow - Right
+Space / W / Up arrow - Jump
+R - Restart Level
+esc - Pause
+
+Goal: 
+You are a lost traveler aboard 
+various space ships, you need to
+take over the ship to escape!
+
+Created by:
+David Guzman Valente
+Daniel Petkau
+Daniel Lelivelt"
+
+[connection signal="pressed" from="close" to="." method="_on_close_pressed"]

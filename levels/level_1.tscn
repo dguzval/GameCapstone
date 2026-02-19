@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://bqymf58h3qttu"]
+[gd_scene load_steps=11 format=3 uid="uid://bqymf58h3qttu"]
 
 [ext_resource type="Texture2D" uid="uid://d0gloldhpxhx3" path="res://assets/sprites/Space Cave Tileset.png" id="1_7ku3j"]
 [ext_resource type="Texture2D" uid="uid://b0xcfhha4enuj" path="res://assets/sprites/SpaceStationAda/SpaceStation_Tileset.png" id="2_b7fq7"]
 [ext_resource type="Texture2D" uid="uid://ddtdnhc0bcksb" path="res://assets/sprites/SpaceStationAda/SpaceStation_Objects.png" id="3_06wm7"]
 [ext_resource type="PackedScene" uid="uid://bwd1lp5fanqat" path="res://scenes/player.tscn" id="4_da2lp"]
 [ext_resource type="PackedScene" uid="uid://dtr3ohuvqa1he" path="res://scenes/exit.tscn" id="5_s717a"]
+[ext_resource type="PackedScene" uid="uid://di68abiponrlg" path="res://scenes/pause_menu.tscn" id="6_btoec"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w0414"]
 texture = ExtResource("1_7ku3j")
@@ -387,3 +388,8 @@ zoom = Vector2(1.5, 1.5)
 [node name="Exit" parent="." instance=ExtResource("5_s717a")]
 position = Vector2(482, -91)
 scale = Vector2(-1, 1)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Pause_Menu" parent="CanvasLayer" instance=ExtResource("6_btoec")]
+metadata/_edit_use_anchors_ = true

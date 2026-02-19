@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://br1vonvw2er5j"]
+[gd_scene load_steps=12 format=3 uid="uid://br1vonvw2er5j"]
 
 [ext_resource type="Texture2D" uid="uid://d0gloldhpxhx3" path="res://assets/sprites/Space Cave Tileset.png" id="1_btoec"]
 [ext_resource type="Texture2D" uid="uid://b0xcfhha4enuj" path="res://assets/sprites/SpaceStationAda/SpaceStation_Tileset.png" id="2_gwceb"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bwd1lp5fanqat" path="res://scenes/player.tscn" id="4_3sk1a"]
 [ext_resource type="PackedScene" uid="uid://dtr3ohuvqa1he" path="res://scenes/exit.tscn" id="5_08mmt"]
 [ext_resource type="PackedScene" uid="uid://jc00soarpg78" path="res://scenes/gravity_button.tscn" id="6_5ot28"]
+[ext_resource type="PackedScene" uid="uid://di68abiponrlg" path="res://scenes/pause_menu.tscn" id="7_ep78u"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_iywne"]
 texture = ExtResource("1_btoec")
@@ -390,3 +391,8 @@ scale = Vector2(-1, 1)
 
 [node name="Gravity_Button" parent="." instance=ExtResource("6_5ot28")]
 position = Vector2(169, 59)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Pause_Menu" parent="CanvasLayer" instance=ExtResource("7_ep78u")]
+metadata/_edit_use_anchors_ = true

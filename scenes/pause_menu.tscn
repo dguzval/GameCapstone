@@ -1,0 +1,348 @@
+[gd_scene load_steps=21 format=3 uid="uid://di68abiponrlg"]
+
+[ext_resource type="Script" uid="uid://c28ulln4i4esp" path="res://scripts/pause_menu.gd" id="1_myx47"]
+[ext_resource type="Shader" uid="uid://b1aornhnpw4er" path="res://scripts/pause_menu.gdshader" id="1_n87rw"]
+[ext_resource type="Texture2D" uid="uid://ddmosia43k0ad" path="res://assets/ui_graphics/1 Frames/Interface windows.png" id="3_kukqi"]
+[ext_resource type="Texture2D" uid="uid://c04nl5goav4or" path="res://assets/ui_graphics/6 Buttons/Buttons2.png" id="4_5d2l8"]
+[ext_resource type="FontFile" uid="uid://p4sudry53o6x" path="res://assets/ui_graphics/10 Font/CyberpunkCraftpixPixel.otf" id="4_7l7mv"]
+[ext_resource type="PackedScene" uid="uid://bqclbqn84glrq" path="res://scenes/help.tscn" id="6_v4r4p"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_myx47"]
+shader = ExtResource("1_n87rw")
+shader_parameter/lod = 0.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_myx47"]
+texture = ExtResource("3_kukqi")
+texture_margin_left = 4.0
+texture_margin_top = 3.0
+texture_margin_right = 4.0
+texture_margin_bottom = 3.0
+region_rect = Rect2(1341, 736, 238, 223)
+
+[sub_resource type="Animation" id="Animation_n87rw"]
+resource_name = "blur"
+length = 0.3
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/lod")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(0, -0.15, 0, 0.15, 0, 0.8, -0.050000004, -0.13333334, 0, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PanelContainer:modulate:r")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0, 1, -0.050000004, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PanelContainer:modulate:g")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0, 1, -0.050000004, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PanelContainer:modulate:b")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0, 1, -0.050000004, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("PanelContainer:modulate:a")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0, 2),
+"points": PackedFloat32Array(0, -0.15, 0, 0.15, 0, 1, -0.050000004, -0.16666667, 0, 0),
+"times": PackedFloat32Array(0, 0.3)
+}
+
+[sub_resource type="Animation" id="Animation_myx47"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/lod")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PanelContainer:modulate:r")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PanelContainer:modulate:g")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PanelContainer:modulate:b")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("PanelContainer:modulate:a")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.15, 0, 0.15, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_myx47"]
+_data = {
+&"RESET": SubResource("Animation_myx47"),
+&"blur": SubResource("Animation_n87rw")
+}
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7l7mv"]
+texture = ExtResource("4_5d2l8")
+texture_margin_left = 2.0
+texture_margin_top = 3.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+region_rect = Rect2(65, 1, 14, 14)
+modulate_color = Color(1, 0.8039216, 0.06666667, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5d2l8"]
+texture = ExtResource("4_5d2l8")
+texture_margin_left = 2.0
+texture_margin_top = 3.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+region_rect = Rect2(65, 17, 14, 14)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v4r4p"]
+texture = ExtResource("4_5d2l8")
+texture_margin_left = 2.0
+texture_margin_top = 3.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+region_rect = Rect2(65, 1, 14, 14)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1s2dm"]
+texture = ExtResource("4_5d2l8")
+texture_margin_left = 2.0
+texture_margin_top = 3.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+region_rect = Rect2(33, 1, 14, 14)
+modulate_color = Color(0.5294118, 0.80784315, 0.98039216, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_88e76"]
+texture = ExtResource("4_5d2l8")
+texture_margin_left = 2.0
+texture_margin_top = 3.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+region_rect = Rect2(33, 17, 14, 14)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_knqa7"]
+texture = ExtResource("4_5d2l8")
+texture_margin_left = 2.0
+texture_margin_top = 3.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+region_rect = Rect2(33, 1, 14, 14)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_71k7c"]
+texture = ExtResource("4_5d2l8")
+texture_margin_left = 2.0
+texture_margin_top = 3.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+region_rect = Rect2(1, 1, 14, 14)
+modulate_color = Color(1, 0.13333334, 0.13333334, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cmnsq"]
+texture = ExtResource("4_5d2l8")
+texture_margin_left = 2.0
+texture_margin_top = 3.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+region_rect = Rect2(1, 17, 14, 14)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ofnjo"]
+texture = ExtResource("4_5d2l8")
+texture_margin_left = 2.0
+texture_margin_top = 3.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+region_rect = Rect2(1, 1, 14, 14)
+
+[node name="Pause_Menu" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_myx47")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_myx47")
+layout_mode = 0
+offset_right = 768.0
+offset_bottom = 431.0
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -158.0
+offset_top = -94.5
+offset_right = 158.0
+offset_bottom = 94.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_myx47")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+size_flags_stretch_ratio = 5.66
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_myx47")
+}
+
+[node name="Resume" type="Button" parent="."]
+custom_minimum_size = Vector2(240, 10)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = -26.0
+offset_right = 120.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_7l7mv")
+theme_override_styles/normal = SubResource("StyleBoxTexture_7l7mv")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_5d2l8")
+theme_override_styles/hover = SubResource("StyleBoxTexture_v4r4p")
+text = "Resume"
+
+[node name="Help" type="Button" parent="."]
+custom_minimum_size = Vector2(240, 10)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = 9.0
+offset_right = 120.0
+offset_bottom = 37.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_7l7mv")
+theme_override_styles/normal = SubResource("StyleBoxTexture_1s2dm")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_88e76")
+theme_override_styles/hover = SubResource("StyleBoxTexture_knqa7")
+text = "HELP"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -127.5
+offset_top = -81.0
+offset_right = 127.5
+offset_bottom = -48.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_7l7mv")
+theme_override_font_sizes/font_size = 30
+text = "Game Paused"
+horizontal_alignment = 1
+
+[node name="Quit" type="Button" parent="."]
+custom_minimum_size = Vector2(240, 10)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -120.0
+offset_top = 44.0
+offset_right = 120.0
+offset_bottom = 72.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("4_7l7mv")
+theme_override_styles/normal = SubResource("StyleBoxTexture_71k7c")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_cmnsq")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ofnjo")
+text = "Quit"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="help" parent="CanvasLayer" instance=ExtResource("6_v4r4p")]
+
+[connection signal="pressed" from="Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="Help" to="." method="_on_help_pressed"]
+[connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]
