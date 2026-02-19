@@ -1,14 +1,14 @@
 [gd_scene load_steps=11 format=3 uid="uid://cpv3afi0u6d52"]
 
-[ext_resource type="Texture2D" uid="uid://d0gloldhpxhx3" path="res://assets/sprites/Space Cave Tileset.png" id="1_es671"]
-[ext_resource type="Texture2D" uid="uid://b0xcfhha4enuj" path="res://assets/sprites/SpaceStationAda/SpaceStation_Tileset.png" id="2_7m6ti"]
-[ext_resource type="Texture2D" uid="uid://ddtdnhc0bcksb" path="res://assets/sprites/SpaceStationAda/SpaceStation_Objects.png" id="3_ehbiv"]
-[ext_resource type="PackedScene" uid="uid://bwd1lp5fanqat" path="res://scenes/player.tscn" id="4_gwj0v"]
-[ext_resource type="PackedScene" uid="uid://dtr3ohuvqa1he" path="res://scenes/exit.tscn" id="5_f7jqy"]
-[ext_resource type="PackedScene" uid="uid://q0iifjevlag6" path="res://scenes/teleporter.tscn" id="6_pcc78"]
+[ext_resource type="Texture2D" uid="uid://d0gloldhpxhx3" path="res://assets/sprites/Space Cave Tileset.png" id="1_4hfcb"]
+[ext_resource type="Texture2D" uid="uid://b0xcfhha4enuj" path="res://assets/sprites/SpaceStationAda/SpaceStation_Tileset.png" id="2_v6cwa"]
+[ext_resource type="Texture2D" uid="uid://ddtdnhc0bcksb" path="res://assets/sprites/SpaceStationAda/SpaceStation_Objects.png" id="3_e1vc6"]
+[ext_resource type="PackedScene" uid="uid://bwd1lp5fanqat" path="res://scenes/player.tscn" id="4_cuy2k"]
+[ext_resource type="PackedScene" uid="uid://dtr3ohuvqa1he" path="res://scenes/exit.tscn" id="5_wvxxa"]
+[ext_resource type="PackedScene" uid="uid://q0iifjevlag6" path="res://scenes/teleporter.tscn" id="6_6ogal"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w0414"]
-texture = ExtResource("1_es671")
+texture = ExtResource("1_4hfcb")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -1.4388695, -1.8885174, -1.4388695, -2.0683765, 8, -8, 8)
 1:0/0 = 0
@@ -109,7 +109,7 @@ texture = ExtResource("1_es671")
 0:10/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lyvi1"]
-texture = ExtResource("2_7m6ti")
+texture = ExtResource("2_v6cwa")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 1:0/0 = 0
@@ -288,7 +288,7 @@ texture = ExtResource("2_7m6ti")
 10:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3ajl4"]
-texture = ExtResource("3_ehbiv")
+texture = ExtResource("3_e1vc6")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -378,22 +378,22 @@ layer_0/tile_data = PackedInt32Array(0, 65537, 1342177280, 65536, 65537, 1342177
 
 [node name="GameManager" type="Node2D" parent="."]
 
-[node name="Player" parent="." instance=ExtResource("4_gwj0v")]
+[node name="Player" parent="." instance=ExtResource("4_cuy2k")]
 position = Vector2(41, 35)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(255, -15)
 zoom = Vector2(1.5, 1.5)
 
-[node name="Exit" parent="." instance=ExtResource("5_f7jqy")]
+[node name="Exit" parent="." instance=ExtResource("5_wvxxa")]
 position = Vector2(457, -125)
 scale = Vector2(-1, 1)
 
-[node name="Teleporter" parent="." node_paths=PackedStringArray("landing_zone") instance=ExtResource("6_pcc78")]
+[node name="Teleporter" parent="." node_paths=PackedStringArray("landing_zone") instance=ExtResource("6_6ogal")]
 position = Vector2(41, -97)
 landing_zone = NodePath("../Teleporter2")
 
-[node name="Teleporter2" parent="." node_paths=PackedStringArray("landing_zone") instance=ExtResource("6_pcc78")]
+[node name="Teleporter2" parent="." node_paths=PackedStringArray("landing_zone") instance=ExtResource("6_6ogal")]
 position = Vector2(486, 66)
 rotation = 3.1415927
 landing_zone = NodePath("../Teleporter")
