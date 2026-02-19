@@ -90,14 +90,14 @@ scale = Vector2(0.9479166, 0.9072917)
 texture = ExtResource("2_wu84c")
 
 [node name="Label" type="Label" parent="."]
-offset_left = 64.0
-offset_top = 100.0
-offset_right = 157.42857
-offset_bottom = 160.0
+offset_left = 60.999996
+offset_top = 116.0
+offset_right = 154.71428
+offset_bottom = 176.57143
 scale = Vector2(3.5, 3.5)
 theme_override_fonts/font = ExtResource("2_bqqt6")
-text = "The 
-Lost
+text = "The
+Lost 
 Traveler"
 
 [node name="Control" type="Control" parent="."]
