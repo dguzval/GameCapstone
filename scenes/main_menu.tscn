@@ -1,0 +1,152 @@
+[gd_scene load_steps=15 format=3 uid="uid://bsi84nfsymb0v"]
+
+[ext_resource type="Script" uid="uid://yvbk7sd2p6oy" path="res://scenes/main_menu.gd" id="1_l6cm7"]
+[ext_resource type="FontFile" uid="uid://p4sudry53o6x" path="res://assets/ui_graphics/10 Font/CyberpunkCraftpixPixel.otf" id="2_bqqt6"]
+[ext_resource type="Texture2D" uid="uid://c04nl5goav4or" path="res://assets/ui_graphics/6 Buttons/Buttons2.png" id="2_ekxnf"]
+[ext_resource type="Texture2D" uid="uid://bnfa5hmn0ggvy" path="res://assets/ui_graphics/blue-preview.png" id="2_wu84c"]
+[ext_resource type="PackedScene" uid="uid://bqclbqn84glrq" path="res://scenes/help.tscn" id="5_8ln24"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8ln24"]
+texture = ExtResource("2_ekxnf")
+texture_margin_left = 2.0
+texture_margin_top = 3.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+region_rect = Rect2(97, 1, 14, 14)
+modulate_color = Color(0.13333334, 0.81960785, 0.13333334, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rtw2f"]
+texture = ExtResource("2_ekxnf")
+texture_margin_left = 2.0
+texture_margin_top = 3.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+region_rect = Rect2(97, 17, 14, 15)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_oa1go"]
+texture = ExtResource("2_ekxnf")
+texture_margin_left = 2.0
+texture_margin_top = 3.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+region_rect = Rect2(97, 1, 14, 14)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ekxnf"]
+texture = ExtResource("2_ekxnf")
+texture_margin_left = 2.0
+texture_margin_top = 3.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+region_rect = Rect2(33, 1, 14, 14)
+modulate_color = Color(0.5294118, 0.80784315, 0.98039216, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bqqt6"]
+texture = ExtResource("2_ekxnf")
+texture_margin_left = 2.0
+texture_margin_top = 3.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+region_rect = Rect2(33, 17, 14, 14)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wu84c"]
+texture = ExtResource("2_ekxnf")
+texture_margin_left = 2.0
+texture_margin_top = 3.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+region_rect = Rect2(33, 1, 14, 14)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tbmy8"]
+texture = ExtResource("2_ekxnf")
+texture_margin_left = 2.0
+texture_margin_top = 3.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+region_rect = Rect2(1, 1, 14, 14)
+modulate_color = Color(1, 0.13333334, 0.13333334, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jk1qb"]
+texture = ExtResource("2_ekxnf")
+texture_margin_left = 2.0
+texture_margin_top = 3.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+region_rect = Rect2(1, 17, 14, 14)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5dd4i"]
+texture = ExtResource("2_ekxnf")
+texture_margin_left = 2.0
+texture_margin_top = 3.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+region_rect = Rect2(1, 1, 14, 14)
+
+[node name="Main_menu" type="Node2D"]
+script = ExtResource("1_l6cm7")
+
+[node name="BluePreview" type="Sprite2D" parent="."]
+position = Vector2(384.25003, 216.25)
+scale = Vector2(0.9479166, 0.9072917)
+texture = ExtResource("2_wu84c")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 64.0
+offset_top = 100.0
+offset_right = 157.42857
+offset_bottom = 160.0
+scale = Vector2(3.5, 3.5)
+theme_override_fonts/font = ExtResource("2_bqqt6")
+text = "The 
+Lost
+Traveler"
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 547.0
+offset_top = 130.0
+offset_right = 637.0
+offset_bottom = 216.0
+scale = Vector2(2, 2)
+
+[node name="Play" type="Button" parent="Control"]
+texture_filter = 1
+layout_mode = 0
+offset_right = 90.0
+offset_bottom = 26.0
+theme_override_fonts/font = ExtResource("2_bqqt6")
+theme_override_styles/normal = SubResource("StyleBoxTexture_8ln24")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_rtw2f")
+theme_override_styles/hover = SubResource("StyleBoxTexture_oa1go")
+text = "Play"
+
+[node name="Help" type="Button" parent="Control"]
+texture_filter = 1
+layout_mode = 0
+offset_top = 30.0
+offset_right = 90.0
+offset_bottom = 55.999985
+theme_override_fonts/font = ExtResource("2_bqqt6")
+theme_override_styles/normal = SubResource("StyleBoxTexture_ekxnf")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_bqqt6")
+theme_override_styles/hover = SubResource("StyleBoxTexture_wu84c")
+text = "HELP"
+
+[node name="Quit" type="Button" parent="Control"]
+layout_mode = 0
+offset_top = 60.0
+offset_right = 90.0
+offset_bottom = 86.0
+theme_override_fonts/font = ExtResource("2_bqqt6")
+theme_override_styles/normal = SubResource("StyleBoxTexture_tbmy8")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_jk1qb")
+theme_override_styles/hover = SubResource("StyleBoxTexture_5dd4i")
+text = "Quit"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="help" parent="CanvasLayer" instance=ExtResource("5_8ln24")]
+
+[connection signal="pressed" from="Control/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Control/Help" to="." method="_on_help_pressed"]
+[connection signal="pressed" from="Control/Quit" to="." method="_on_quit_pressed"]
