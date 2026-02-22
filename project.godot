@@ -18,6 +18,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 LevelState="*res://scripts/level_state.gd"
+Firebase="*res://addons/godot-firebase/firebase/firebase.tscn"
+FirebaseManager="*res://scripts/FirebaseManager.gd"
 
 [display]
 
@@ -26,6 +28,10 @@ window/size/viewport_height=432
 window/stretch/mode="canvas_items"
 window/stretch/scale_mode="integer"
 window/vsync/vsync_mode=0
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot-firebase/plugin.cfg")
 
 [input]
 

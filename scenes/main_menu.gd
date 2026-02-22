@@ -10,8 +10,21 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	pass
 
+func new_data_updated(data) -> void:
+	print("new_data")
+	print(data)
+		
+func patch_data_updated(data):
+	print("patch_data")
+	print(data)
+		
+		
 func _on_play_pressed() -> void:
 	get_tree().change_scene_to_file("res://levels/level_1.tscn")
+	call_deferred("_start_level_1")
+
+func _start_level_1() -> void:
+	LevelState.on_level_started(1)
 
 func _on_help_pressed() -> void:
 	help_screen.pause()
