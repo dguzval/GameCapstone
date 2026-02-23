@@ -309,7 +309,6 @@ size = Vector2(16, 160)
 [node name="Game2" type="Node2D"]
 
 [node name="TileMap" type="Node2D" parent="."]
-rotation = -0.0014578537
 
 [node name="Layer0" type="TileMapLayer" parent="TileMap"]
 use_parent_material = true
