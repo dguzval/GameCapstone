@@ -373,7 +373,6 @@ sources/2 = SubResource("TileSetAtlasSource_3ajl4")
 [node name="Game" type="Node2D"]
 
 [node name="TileMap" type="TileMap" parent="."]
-rotation = -0.0014578537
 tile_set = SubResource("TileSet_ds3co")
 collision_animatable = true
 format = 2
