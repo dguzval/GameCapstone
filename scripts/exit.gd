@@ -35,9 +35,14 @@ func _on_body_entered(body: Node2D) -> void:
 		call_deferred("_go_to_next_level", next_level_path, next_level_number)
 
 func _go_to_next_level(path: String, next_level_number: int) -> void:
-	get_tree().change_scene_to_file(path)
-	LevelState.reset_for_level()
+	if ResourceLoader.exists(path):
+		get_tree().change_scene_to_file(path)
+	else:
+		RunTimer.end_run()
+		LevelState.on_level_ended()
+		get_tree().change_scene_to_file("res://scenes/victory_page.tscn")
 	
+	LevelState.reset_for_level()
 	call_deferred("_start_next_level", next_level_number)
 
 func _start_next_level(next_level_number: int) -> void:

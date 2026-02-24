@@ -20,6 +20,7 @@ config/icon="res://icon.svg"
 LevelState="*res://scripts/level_state.gd"
 Firebase="*res://addons/godot-firebase/firebase/firebase.tscn"
 FirebaseManager="*res://scripts/FirebaseManager.gd"
+RunTimer="*res://scripts/RunTimer.gd"
 
 [display]
 
