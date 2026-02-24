@@ -26,6 +26,7 @@ func patch_data_updated(data):
 		
 func _on_play_pressed() -> void:
 	LevelState.curr_level = level_loaded
+	RunTimer.start_new_run()
 	get_tree().change_scene_to_file(play_level)
 		
 	call_deferred("_start_level")
@@ -41,12 +42,17 @@ func _save() -> void:
 	var data = SceneData.new()
 	data.last_level_played = FILE_BEGIN + str(LevelState.get_level()) + ".tscn"
 	data.level_stored = LevelState.get_level()
+	data.elapsed_ms = RunTimer.get_elapsed_ms()
 	
 	ResourceSaver.save(data, save_location)
 	print("saved!")
 
 func _load() -> void:
+	if not ResourceLoader.exists(save_location):
+		return
+	
 	var data = ResourceLoader.load(save_location) as SceneData
 	play_level = data.last_level_played
 	level_loaded = data.level_stored
+	RunTimer.resume_from_elapsed(data.elapsed_ms)
 	print("loaded!")

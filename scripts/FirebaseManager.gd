@@ -7,6 +7,10 @@ var device_ref
 var current_level_id := ""
 var level_start_time_ms := 0
 
+var overall_time_played_ms: int = 0
+var _last_flush_overall_ms: int = 0
+var _flush_timer: Timer
+
 const DEVICE_ID_PATH := "user://device_id.txt"
 const _HEX := "0123456789abcdef"
 
@@ -20,6 +24,13 @@ func _ready() -> void:
 	Firebase.Auth.signup_succeeded.connect(_on_auth_ok)
 	Firebase.Auth.login_failed.connect(_on_auth_fail)
 	Firebase.Auth.login_anonymous()
+
+	_flush_timer = Timer.new()
+	_flush_timer.wait_time = 20.0
+	_flush_timer.one_shot = false
+	_flush_timer.autostart = true
+	_flush_timer.timeout.connect(_flush_overall_time)
+	add_child(_flush_timer)
 
 func _on_auth_ok(auth_info: Dictionary) -> void:
 	uid = str(auth_info.get("localid", auth_info.get("uid", "")))
@@ -36,31 +47,106 @@ func _on_auth_ok(auth_info: Dictionary) -> void:
 		"last_uid": uid
 	})
 
+	device_ref.update("progress", {
+		"overall_time_played_ms": overall_time_played_ms,
+		"last_seen_unix": Time.get_unix_time_from_system()
+	})
+	_last_flush_overall_ms = overall_time_played_ms
+
 func _on_auth_fail(code: int, message: String) -> void:
 	push_error("AUTH FAIL %s: %s" % [code, message])
 
 func on_level_started(level_id: String) -> void:
+	_finalize_running_segment()
+
 	current_level_id = level_id
 	level_start_time_ms = Time.get_ticks_msec()
 
 	if device_ref:
 		device_ref.update("progress", {
 			"current_level": level_id,
-			"last_seen_unix": Time.get_unix_time_from_system()
+			"last_seen_unix": Time.get_unix_time_from_system(),
+			"overall_time_played_ms": overall_time_played_ms
 		})
+		_last_flush_overall_ms = overall_time_played_ms
 
 func on_level_ended(level_id: String) -> void:
 	if level_start_time_ms == 0:
 		return
 
-	var delta_sec := float(Time.get_ticks_msec() - level_start_time_ms) / 1000.0
+	var now_ms := Time.get_ticks_msec()
+	var delta_ms := now_ms - level_start_time_ms
+	var delta_sec := float(delta_ms) / 1000.0
+
 	level_start_time_ms = 0
+
+	overall_time_played_ms += max(delta_ms, 0)
 
 	if device_ref:
 		device_ref.update("level_times/level_%s" % level_id, {
 			"last_duration_sec": delta_sec,
 			"last_played_unix": Time.get_unix_time_from_system()
 		})
+
+		device_ref.update("progress", {
+			"overall_time_played_ms": overall_time_played_ms,
+			"last_seen_unix": Time.get_unix_time_from_system(),
+			"current_level": level_id
+		})
+		_last_flush_overall_ms = overall_time_played_ms
+
+func on_game_paused() -> void:
+	_finalize_running_segment()
+
+func on_game_resumed() -> void:
+	if current_level_id != "":
+		level_start_time_ms = Time.get_ticks_msec()
+
+func _flush_overall_time() -> void:
+	if device_ref == null:
+		return
+	if level_start_time_ms == 0:
+		return
+
+	var now_ms := Time.get_ticks_msec()
+	var delta_ms := now_ms - level_start_time_ms
+	if delta_ms <= 0:
+		return
+
+	overall_time_played_ms += delta_ms
+	level_start_time_ms = now_ms
+
+	if overall_time_played_ms != _last_flush_overall_ms:
+		device_ref.update("progress", {
+			"overall_time_played_ms": overall_time_played_ms,
+			"last_seen_unix": Time.get_unix_time_from_system(),
+			"current_level": current_level_id
+		})
+		_last_flush_overall_ms = overall_time_played_ms
+
+func _finalize_running_segment() -> void:
+	if level_start_time_ms == 0:
+		return
+
+	var now_ms := Time.get_ticks_msec()
+	var delta_ms := now_ms - level_start_time_ms
+	if delta_ms > 0:
+		overall_time_played_ms += delta_ms
+	level_start_time_ms = 0
+
+	if device_ref:
+		device_ref.update("progress", {
+			"overall_time_played_ms": overall_time_played_ms,
+			"last_seen_unix": Time.get_unix_time_from_system(),
+			"current_level": current_level_id
+		})
+		_last_flush_overall_ms = overall_time_played_ms
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		_finalize_running_segment()
+	if what == NOTIFICATION_APPLICATION_FOCUS_OUT:
+		_finalize_running_segment()
 
 func _get_or_create_device_id() -> String:
 	if OS.is_userfs_persistent() and FileAccess.file_exists(DEVICE_ID_PATH):
