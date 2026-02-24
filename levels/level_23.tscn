@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=4 uid="uid://lswnrakqluk8"]
+[gd_scene load_steps=52 format=4 uid="uid://lswnrakqluk8"]
 
 [ext_resource type="Texture2D" uid="uid://d0gloldhpxhx3" path="res://assets/sprites/Space Cave Tileset.png" id="1_urbod"]
 [ext_resource type="Texture2D" uid="uid://b0xcfhha4enuj" path="res://assets/sprites/SpaceStationAda/SpaceStation_Tileset.png" id="2_3270p"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://cngagf5f5nbhu" path="res://scenes/platform.tscn" id="10_h0w43"]
 [ext_resource type="PackedScene" uid="uid://jc00soarpg78" path="res://scenes/gravity_button.tscn" id="11_3270p"]
 [ext_resource type="PackedScene" uid="uid://05cwhquogn7" path="res://scenes/baked_collisions.tscn" id="12_tuiqn"]
+[ext_resource type="PackedScene" uid="uid://di68abiponrlg" path="res://scenes/pause_menu.tscn" id="13_us7i5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w0414"]
 texture = ExtResource("1_urbod")
@@ -460,6 +461,7 @@ rotation = -3.1415927
 scale = Vector2(-1, -1)
 
 [node name="BakedCollisions" parent="." instance=ExtResource("12_tuiqn")]
+visible = false
 tilemaplayers_nodepaths = Array[NodePath]([NodePath("../TileMap/Layer0")])
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BakedCollisions"]
@@ -610,3 +612,8 @@ shape = SubResource("RectangleShape2D_gkbul")
 [node name="CollisionShape2D34" type="CollisionShape2D" parent="BakedCollisions"]
 position = Vector2(504, -16)
 shape = SubResource("RectangleShape2D_83nre")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Pause_Menu" parent="CanvasLayer" instance=ExtResource("13_us7i5")]
+metadata/_edit_use_anchors_ = true

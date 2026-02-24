@@ -344,6 +344,7 @@ position = Vector2(167, -54)
 position = Vector2(400, 63)
 
 [node name="BakedCollisions" parent="." instance=ExtResource("8_5n8do")]
+visible = false
 tilemaplayers_nodepaths = Array[NodePath]([NodePath("../TileMap/Layer0")])
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BakedCollisions"]
