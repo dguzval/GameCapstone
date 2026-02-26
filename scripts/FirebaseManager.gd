@@ -2,6 +2,9 @@ extends Node
 
 var device_id := ""
 var uid := ""
+var session_id := ""
+
+var _bootstrapped := false
 var device_ref
 
 var current_level_id := ""
@@ -32,29 +35,45 @@ func _ready() -> void:
 	_flush_timer.timeout.connect(_flush_overall_time)
 	add_child(_flush_timer)
 
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		_finalize_running_segment()
+	if what == NOTIFICATION_APPLICATION_FOCUS_OUT:
+		_finalize_running_segment()
+
 func _on_auth_ok(auth_info: Dictionary) -> void:
 	uid = str(auth_info.get("localid", auth_info.get("uid", "")))
 	if uid == "":
 		push_error("Auth ok but uid missing: %s" % [auth_info])
 		return
 
+	session_id = "%d_%s" % [int(Time.get_unix_time_from_system()), str(randi())]
 	device_ref = Firebase.Database.get_database_reference("devices/%s" % device_id)
-	print("AUTH OK uid=", uid, " device_ref=devices/%s" % device_id)
 
-	device_ref.update("debug", {
-		"connected": true,
-		"ts_unix": Time.get_unix_time_from_system(),
-		"last_uid": uid
-	})
-
-	device_ref.update("progress", {
-		"overall_time_played_ms": overall_time_played_ms,
-		"last_seen_unix": Time.get_unix_time_from_system()
-	})
-	_last_flush_overall_ms = overall_time_played_ms
+	var once_ref = Firebase.Database.get_once_database_reference("devices/%s" % device_id)
+	once_ref.once_successful.connect(_on_progress_loaded)
+	once_ref.once_failed.connect(_on_progress_failed)
+	once_ref.once("progress")
 
 func _on_auth_fail(code: int, message: String) -> void:
 	push_error("AUTH FAIL %s: %s" % [code, message])
+
+func _on_progress_loaded(progress: Dictionary) -> void:
+	var local_so_far := overall_time_played_ms
+	var remote := int(progress.get("overall_time_played_ms", 0))
+
+	overall_time_played_ms = remote + local_so_far
+	_last_flush_overall_ms = overall_time_played_ms
+	_bootstrapped = true
+
+	_write_open_event()
+	_write_initial_progress()
+
+func _on_progress_failed() -> void:
+	_last_flush_overall_ms = overall_time_played_ms
+	_bootstrapped = true
+	_write_open_event()
+	_write_initial_progress()
 
 func on_level_started(level_id: String) -> void:
 	_finalize_running_segment()
@@ -62,13 +81,15 @@ func on_level_started(level_id: String) -> void:
 	current_level_id = level_id
 	level_start_time_ms = Time.get_ticks_msec()
 
-	if device_ref:
-		device_ref.update("progress", {
-			"current_level": level_id,
-			"last_seen_unix": Time.get_unix_time_from_system(),
-			"overall_time_played_ms": overall_time_played_ms
-		})
-		_last_flush_overall_ms = overall_time_played_ms
+	if not _bootstrapped or device_ref == null:
+		return
+
+	device_ref.update("progress", {
+		"current_level": current_level_id,
+		"last_seen_unix": Time.get_unix_time_from_system(),
+		"overall_time_played_ms": overall_time_played_ms
+	})
+	_last_flush_overall_ms = overall_time_played_ms
 
 func on_level_ended(level_id: String) -> void:
 	if level_start_time_ms == 0:
@@ -79,32 +100,39 @@ func on_level_ended(level_id: String) -> void:
 	var delta_sec := float(delta_ms) / 1000.0
 
 	level_start_time_ms = 0
-
 	overall_time_played_ms += max(delta_ms, 0)
 
-	if device_ref:
-		device_ref.update("level_times/level_%s" % level_id, {
-			"last_duration_sec": delta_sec,
-			"last_played_unix": Time.get_unix_time_from_system()
-		})
+	if not _bootstrapped or device_ref == null:
+		return
 
-		device_ref.update("progress", {
-			"overall_time_played_ms": overall_time_played_ms,
-			"last_seen_unix": Time.get_unix_time_from_system(),
-			"current_level": level_id
-		})
-		_last_flush_overall_ms = overall_time_played_ms
+	device_ref.update("level_times/level_%s" % level_id, {
+		"last_duration_sec": delta_sec,
+		"last_played_unix": Time.get_unix_time_from_system()
+	})
+
+	device_ref.update("progress", {
+		"overall_time_played_ms": overall_time_played_ms,
+		"last_seen_unix": Time.get_unix_time_from_system(),
+		"current_level": current_level_id
+	})
+	_last_flush_overall_ms = overall_time_played_ms
 
 func on_game_paused() -> void:
+	_log_event("pause", current_level_id)
 	_finalize_running_segment()
 
 func on_game_resumed() -> void:
+	_log_event("unpause", current_level_id)
 	if current_level_id != "":
 		level_start_time_ms = Time.get_ticks_msec()
 
+func log_restart(level_id: String = "") -> void:
+	var lid := level_id
+	if lid == "":
+		lid = current_level_id
+	_log_event("restart", lid)
+
 func _flush_overall_time() -> void:
-	if device_ref == null:
-		return
 	if level_start_time_ms == 0:
 		return
 
@@ -115,6 +143,9 @@ func _flush_overall_time() -> void:
 
 	overall_time_played_ms += delta_ms
 	level_start_time_ms = now_ms
+
+	if not _bootstrapped or device_ref == null:
+		return
 
 	if overall_time_played_ms != _last_flush_overall_ms:
 		device_ref.update("progress", {
@@ -134,19 +165,62 @@ func _finalize_running_segment() -> void:
 		overall_time_played_ms += delta_ms
 	level_start_time_ms = 0
 
-	if device_ref:
-		device_ref.update("progress", {
-			"overall_time_played_ms": overall_time_played_ms,
-			"last_seen_unix": Time.get_unix_time_from_system(),
-			"current_level": current_level_id
-		})
-		_last_flush_overall_ms = overall_time_played_ms
+	if not _bootstrapped or device_ref == null:
+		return
 
-func _notification(what: int) -> void:
-	if what == NOTIFICATION_WM_CLOSE_REQUEST:
-		_finalize_running_segment()
-	if what == NOTIFICATION_APPLICATION_FOCUS_OUT:
-		_finalize_running_segment()
+	device_ref.update("progress", {
+		"overall_time_played_ms": overall_time_played_ms,
+		"last_seen_unix": Time.get_unix_time_from_system(),
+		"current_level": current_level_id
+	})
+	_last_flush_overall_ms = overall_time_played_ms
+
+func _write_initial_progress() -> void:
+	if device_ref == null:
+		return
+
+	device_ref.update("debug", {
+		"connected": true,
+		"ts_unix": Time.get_unix_time_from_system(),
+		"last_uid": uid
+	})
+
+	device_ref.update("progress", {
+		"overall_time_played_ms": overall_time_played_ms,
+		"last_seen_unix": Time.get_unix_time_from_system(),
+		"session_id": session_id,
+		"current_level": current_level_id
+	})
+	_last_flush_overall_ms = overall_time_played_ms
+
+func _write_open_event() -> void:
+	_log_event("open_page", current_level_id)
+
+func _log_event(event_type: String, level_id: String = "", extra: Dictionary = {}) -> void:
+	if device_ref == null or not _bootstrapped:
+		return
+
+	var payload := {
+		"type": event_type,
+		"unix": int(Time.get_unix_time_from_system()),
+		"day": _today_yyyy_mm_dd(),
+		"level_id": level_id,
+		"session_id": session_id,
+		"overall_time_played_ms": overall_time_played_ms
+	}
+
+	for k in extra.keys():
+		payload[k] = extra[k]
+
+	var eid := _event_id()
+	device_ref.update("sessions/%s/events/%s" % [session_id, eid], payload)
+
+func _today_yyyy_mm_dd() -> String:
+	var d := Time.get_date_dict_from_system()
+	return "%04d-%02d-%02d" % [d.year, d.month, d.day]
+
+func _event_id() -> String:
+	return "%d_%s" % [Time.get_ticks_msec(), str(randi())]
 
 func _get_or_create_device_id() -> String:
 	if OS.is_userfs_persistent() and FileAccess.file_exists(DEVICE_ID_PATH):

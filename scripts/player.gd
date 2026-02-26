@@ -21,6 +21,7 @@ func _physics_process(delta: float) -> void:
 			PhysicsServer2D.AREA_PARAM_GRAVITY_VECTOR,
 			Vector2.DOWN
 		)
+		FirebaseManager.log_restart()
 		call_deferred("_restart_level")
 	
 	# Add the gravity.

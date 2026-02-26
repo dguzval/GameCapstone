@@ -7,20 +7,19 @@ func _ready():
 	hide()
 
 func resume():
-	get_tree().paused = false
-	RunTimer.on_game_paused(false)
-	
 	if FirebaseManager:
 		FirebaseManager.on_game_resumed()
-	
-	
+
+	get_tree().paused = false
+	RunTimer.on_game_paused(false)
+
 func pause():
-	get_tree().paused = true
-	RunTimer.on_game_paused(true)
-	
 	if FirebaseManager:
 		FirebaseManager.on_game_paused()
-		
+
+	get_tree().paused = true
+	RunTimer.on_game_paused(true)
+
 	show()
 	animation_player.play("blur")
 	
