@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://dq2i4eh7sx5hw"]
+[gd_scene load_steps=13 format=3 uid="uid://dq2i4eh7sx5hw"]
 
 [ext_resource type="Texture2D" uid="uid://d0gloldhpxhx3" path="res://assets/sprites/Space Cave Tileset.png" id="1_xnqdl"]
 [ext_resource type="Texture2D" uid="uid://b0xcfhha4enuj" path="res://assets/sprites/SpaceStationAda/SpaceStation_Tileset.png" id="2_lwfs3"]
 [ext_resource type="Texture2D" uid="uid://ddtdnhc0bcksb" path="res://assets/sprites/SpaceStationAda/SpaceStation_Objects.png" id="3_8sr7i"]
 [ext_resource type="PackedScene" uid="uid://bwd1lp5fanqat" path="res://scenes/player.tscn" id="4_o8n65"]
 [ext_resource type="PackedScene" uid="uid://dtr3ohuvqa1he" path="res://scenes/exit.tscn" id="5_bykv0"]
+[ext_resource type="PackedScene" uid="uid://boncjvjlemw4w" path="res://scenes/background.tscn" id="5_jx20j"]
 [ext_resource type="PackedScene" uid="uid://q0iifjevlag6" path="res://scenes/teleporter.tscn" id="6_lwfs3"]
 [ext_resource type="PackedScene" uid="uid://di68abiponrlg" path="res://scenes/pause_menu.tscn" id="7_d2qfm"]
 
@@ -384,6 +385,8 @@ position = Vector2(41, 35)
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(255, -15)
 zoom = Vector2(1.5, 1.5)
+
+[node name="Background" parent="Camera2D" instance=ExtResource("5_jx20j")]
 
 [node name="Exit" parent="." instance=ExtResource("5_bykv0")]
 position = Vector2(445, -49)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=4 uid="uid://b6axq0satjd0t"]
+[gd_scene load_steps=26 format=4 uid="uid://b6axq0satjd0t"]
 
 [ext_resource type="Texture2D" uid="uid://d0gloldhpxhx3" path="res://assets/sprites/Space Cave Tileset.png" id="1_2nncn"]
 [ext_resource type="Texture2D" uid="uid://cml3s3w188tdq" path="res://assets/ui_graphics/5 Logo/Logo1.png" id="1_oo3cl"]
@@ -11,6 +11,7 @@
 [ext_resource type="FontFile" uid="uid://p4sudry53o6x" path="res://assets/ui_graphics/10 Font/CyberpunkCraftpixPixel.otf" id="7_2nncn"]
 [ext_resource type="Texture2D" uid="uid://c04nl5goav4or" path="res://assets/ui_graphics/6 Buttons/Buttons2.png" id="9_lvjtl"]
 [ext_resource type="PackedScene" uid="uid://cmtfdxgm11ycy" path="res://scenes/movable_box.tscn" id="9_qei0n"]
+[ext_resource type="PackedScene" uid="uid://boncjvjlemw4w" path="res://scenes/background.tscn" id="9_xkx8i"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qei0n"]
 texture = ExtResource("1_oo3cl")
@@ -531,6 +532,8 @@ position = Vector2(95, 107)
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(255, -15)
 zoom = Vector2(1.5, 1.5)
+
+[node name="Background" parent="Camera2D" instance=ExtResource("9_xkx8i")]
 
 [node name="Gravity_Button" parent="." instance=ExtResource("6_xkx8i")]
 position = Vector2(21, 27)

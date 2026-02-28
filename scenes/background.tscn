@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://boncjvjlemw4w"]
+
+[ext_resource type="Texture2D" uid="uid://dm102c35jb2o2" path="res://assets/spaceship_background.png" id="1_bkp1e"]
+
+[node name="Background" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.5882353)
+z_index = -2
+scale = Vector2(0.27, 0.27)
+texture = ExtResource("1_bkp1e")

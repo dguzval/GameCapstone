@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://b0xcfhha4enuj" path="res://assets/sprites/SpaceStationAda/SpaceStation_Tileset.png" id="2_3270p"]
 [ext_resource type="Texture2D" uid="uid://ddtdnhc0bcksb" path="res://assets/sprites/SpaceStationAda/SpaceStation_Objects.png" id="3_tuiqn"]
 [ext_resource type="PackedScene" uid="uid://bwd1lp5fanqat" path="res://scenes/player.tscn" id="4_us7i5"]
+[ext_resource type="PackedScene" uid="uid://boncjvjlemw4w" path="res://scenes/background.tscn" id="5_5c5bb"]
 [ext_resource type="PackedScene" uid="uid://dtr3ohuvqa1he" path="res://scenes/exit.tscn" id="5_xf0bt"]
 [ext_resource type="PackedScene" uid="uid://cmtfdxgm11ycy" path="res://scenes/movable_box.tscn" id="6_nwtdg"]
 [ext_resource type="PackedScene" uid="uid://q0iifjevlag6" path="res://scenes/teleporter.tscn" id="7_qxmhg"]
@@ -341,16 +342,13 @@ size = Vector2(48, 16)
 size = Vector2(16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mum5f"]
-size = Vector2(64, 32)
+size = Vector2(63, 32)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hivtg"]
 size = Vector2(16, 16)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dj84y"]
-size = Vector2(16, 16)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7l1fa"]
-size = Vector2(16, 32)
+size = Vector2(16, 80)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rvym2"]
 size = Vector2(32, 16)
@@ -378,6 +376,8 @@ position = Vector2(39, 95)
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(255, -15)
 zoom = Vector2(1.5, 1.5)
+
+[node name="Background" parent="Camera2D" instance=ExtResource("5_5c5bb")]
 
 [node name="Exit" parent="." instance=ExtResource("5_xf0bt")]
 position = Vector2(487, 69)
@@ -582,7 +582,7 @@ position = Vector2(392, -136)
 shape = SubResource("RectangleShape2D_mbh34")
 
 [node name="CollisionShape2D28" type="CollisionShape2D" parent="BakedCollisions"]
-position = Vector2(416, -16)
+position = Vector2(415.5, -16)
 shape = SubResource("RectangleShape2D_mum5f")
 
 [node name="CollisionShape2D29" type="CollisionShape2D" parent="BakedCollisions"]
@@ -593,12 +593,8 @@ shape = SubResource("RectangleShape2D_hivtg")
 position = Vector2(489, 40)
 shape = SubResource("RectangleShape2D_hivtg")
 
-[node name="CollisionShape2D30" type="CollisionShape2D" parent="BakedCollisions"]
-position = Vector2(440, -40)
-shape = SubResource("RectangleShape2D_dj84y")
-
 [node name="CollisionShape2D31" type="CollisionShape2D" parent="BakedCollisions"]
-position = Vector2(440, 16)
+position = Vector2(440, -8)
 shape = SubResource("RectangleShape2D_7l1fa")
 
 [node name="CollisionShape2D32" type="CollisionShape2D" parent="BakedCollisions"]
