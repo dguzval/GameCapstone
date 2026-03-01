@@ -8,6 +8,7 @@ func _on_body_entered(body: Node2D) -> void:
 
 	if(body.is_in_group("player")):
 		animated_sprite.play("pressed")
+		FirebaseManager.log_pressed_gravity_button(gravity_change)
 		if(gravity_change == "UP"):
 			print("button pressed : gravity UP")
 			PhysicsServer2D.area_set_param(get_viewport().find_world_2d().space, PhysicsServer2D.AREA_PARAM_GRAVITY_VECTOR, Vector2.UP)

@@ -17,6 +17,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		is_claimed = true
 		animated_sprite.visible = false
+		FirebaseManager.log_key()
 		call_deferred("_update_key_access")
 		LevelState.update_key_count()
 		

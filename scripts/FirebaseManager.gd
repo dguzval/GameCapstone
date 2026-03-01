@@ -17,6 +17,9 @@ var _flush_timer: Timer
 const DEVICE_ID_PATH := "user://device_id.txt"
 const _HEX := "0123456789abcdef"
 
+# Update this to change what game version new database entries are associated with
+const GAME_VERSION := "v1.0"
+
 func _ready() -> void:
 	device_id = _get_or_create_device_id()
 	print("DEVICE ID =", device_id, "persistent=", OS.is_userfs_persistent())
@@ -77,6 +80,8 @@ func _on_progress_failed() -> void:
 
 func on_level_started(level_id: String) -> void:
 	_finalize_running_segment()
+	
+	_log_event("level_started", level_id)
 
 	current_level_id = level_id
 	level_start_time_ms = Time.get_ticks_msec()
@@ -94,6 +99,8 @@ func on_level_started(level_id: String) -> void:
 func on_level_ended(level_id: String) -> void:
 	if level_start_time_ms == 0:
 		return
+
+	_log_event("level_ended", level_id)
 
 	var now_ms := Time.get_ticks_msec()
 	var delta_ms := now_ms - level_start_time_ms
@@ -131,6 +138,24 @@ func log_restart(level_id: String = "") -> void:
 	if lid == "":
 		lid = current_level_id
 	_log_event("restart", lid)
+	
+func log_key(level_id: String = "") -> void:
+	var lid := level_id
+	if lid == "":
+		lid = current_level_id
+	_log_event("key_collected", lid)
+
+func log_exit(level_id: String = "") -> void:
+	var lid := level_id
+	if lid == "":
+		lid = current_level_id
+	_log_event("level_complete", lid)
+
+func log_pressed_gravity_button(gravity_change: String = "", level_id: String = "") -> void:
+	var lid := level_id
+	if lid == "":
+		lid = current_level_id
+	_log_event("pressed_gravity_button", lid, {"gravity_change": gravity_change})
 
 func _flush_overall_time() -> void:
 	if level_start_time_ms == 0:
@@ -206,7 +231,8 @@ func _log_event(event_type: String, level_id: String = "", extra: Dictionary = {
 		"day": _today_yyyy_mm_dd(),
 		"level_id": level_id,
 		"session_id": session_id,
-		"overall_time_played_ms": overall_time_played_ms
+		"overall_time_played_ms": overall_time_played_ms,
+		"game_version": GAME_VERSION
 	}
 
 	for k in extra.keys():
