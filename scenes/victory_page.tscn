@@ -1,8 +1,8 @@
-[gd_scene load_steps=26 format=4 uid="uid://b6axq0satjd0t"]
+[gd_scene load_steps=23 format=4 uid="uid://b6axq0satjd0t"]
 
 [ext_resource type="Texture2D" uid="uid://d0gloldhpxhx3" path="res://assets/sprites/Space Cave Tileset.png" id="1_2nncn"]
 [ext_resource type="Texture2D" uid="uid://cml3s3w188tdq" path="res://assets/ui_graphics/5 Logo/Logo1.png" id="1_oo3cl"]
-[ext_resource type="Script" uid="uid://biu84r7dy8nfa" path="res://scenes/victory_page.gd" id="1_tpyf8"]
+[ext_resource type="Script" uid="uid://biu84r7dy8nfa" path="res://scripts/victory_page.gd" id="1_tpyf8"]
 [ext_resource type="Texture2D" uid="uid://b0xcfhha4enuj" path="res://assets/sprites/SpaceStationAda/SpaceStation_Tileset.png" id="2_oo3cl"]
 [ext_resource type="Texture2D" uid="uid://ddtdnhc0bcksb" path="res://assets/sprites/SpaceStationAda/SpaceStation_Objects.png" id="3_qei0n"]
 [ext_resource type="PackedScene" uid="uid://bwd1lp5fanqat" path="res://scenes/player.tscn" id="4_lvjtl"]
@@ -40,31 +40,6 @@ texture_margin_top = 3.0
 texture_margin_right = 2.0
 texture_margin_bottom = 2.0
 region_rect = Rect2(97, 1, 14, 14)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_lvjtl"]
-texture = ExtResource("9_lvjtl")
-texture_margin_left = 2.0
-texture_margin_top = 3.0
-texture_margin_right = 2.0
-texture_margin_bottom = 2.0
-region_rect = Rect2(1, 1, 14, 14)
-modulate_color = Color(1, 0.13333334, 0.13333334, 1)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wiyts"]
-texture = ExtResource("9_lvjtl")
-texture_margin_left = 2.0
-texture_margin_top = 3.0
-texture_margin_right = 2.0
-texture_margin_bottom = 2.0
-region_rect = Rect2(1, 17, 14, 14)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1tw8i"]
-texture = ExtResource("9_lvjtl")
-texture_margin_left = 2.0
-texture_margin_top = 3.0
-texture_margin_right = 2.0
-texture_margin_bottom = 2.0
-region_rect = Rect2(1, 1, 14, 14)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2nncn"]
 
@@ -450,35 +425,20 @@ metadata/_edit_use_anchors_ = true
 [node name="replay" type="Button" parent="CanvasLayer"]
 texture_filter = 1
 anchors_preset = -1
-anchor_right = 0.083333336
-offset_left = 180.0
-offset_top = 31.0
-offset_right = 269.0
-offset_bottom = 57.000015
+anchor_left = 0.098958336
+anchor_top = 0.011597282
+anchor_right = 0.12303519
+anchor_bottom = 0.0046528005
+offset_left = 101.000015
+offset_top = 63.989975
+offset_right = 190.0
+offset_bottom = 89.98999
+scale = Vector2(1.67, 1.67)
 theme_override_fonts/font = ExtResource("7_2nncn")
 theme_override_styles/normal = SubResource("StyleBoxTexture_tpyf8")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_xkx8i")
 theme_override_styles/hover = SubResource("StyleBoxTexture_i5j51")
 text = "REPLAY"
-metadata/_edit_use_anchors_ = true
-
-[node name="exit" type="Button" parent="CanvasLayer"]
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.57942706
-anchor_bottom = 0.5
-offset_left = -202.0
-offset_top = -145.0
-offset_right = -113.0
-offset_bottom = -118.99994
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("7_2nncn")
-theme_override_styles/normal = SubResource("StyleBoxTexture_lvjtl")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_wiyts")
-theme_override_styles/hover = SubResource("StyleBoxTexture_1tw8i")
-text = "EXIT"
 metadata/_edit_use_anchors_ = true
 
 [node name="time_label" type="Label" parent="CanvasLayer"]
@@ -510,10 +470,22 @@ theme_override_font_sizes/font_size = 17
 theme_override_styles/normal = SubResource("StyleBoxEmpty_2nncn")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_oo3cl")
 text = "Congratulations! 
-You took control of the ship"
+You've made it to the end"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+offset_left = 7.0
+offset_top = 61.0
+offset_right = 196.0
+offset_bottom = 130.0
+theme_override_fonts/font = ExtResource("7_2nncn")
+theme_override_font_sizes/font_size = 12
+text = "Developed by:
+David Guzman Valente
+Daniel Petkau
+Daniel Lelivelt"
 
 [node name="TileMap" type="Node" parent="."]
 

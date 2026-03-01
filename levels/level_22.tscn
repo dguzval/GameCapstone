@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=4 uid="uid://im8rhucwy133"]
+[gd_scene load_steps=46 format=4 uid="uid://im8rhucwy133"]
 
 [ext_resource type="Texture2D" uid="uid://d0gloldhpxhx3" path="res://assets/sprites/Space Cave Tileset.png" id="1_h5da2"]
 [ext_resource type="Texture2D" uid="uid://b0xcfhha4enuj" path="res://assets/sprites/SpaceStationAda/SpaceStation_Tileset.png" id="2_6fg0s"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://dg5e7emarlxh7" path="res://scenes/pressure_plate.tscn" id="9_qxwlr"]
 [ext_resource type="PackedScene" uid="uid://fu6rst85qduv" path="res://scenes/key.tscn" id="10_6ac6e"]
 [ext_resource type="PackedScene" uid="uid://05cwhquogn7" path="res://scenes/baked_collisions.tscn" id="11_6ac6e"]
+[ext_resource type="PackedScene" uid="uid://bir15cad4gxf" path="res://scenes/pause_button.tscn" id="14_smpap"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w0414"]
 texture = ExtResource("1_h5da2")
@@ -531,3 +532,5 @@ shape = SubResource("RectangleShape2D_vvlfx")
 
 [node name="Pause_Menu" parent="CanvasLayer" instance=ExtResource("6_6ac6e")]
 metadata/_edit_use_anchors_ = true
+
+[node name="PauseButton" parent="CanvasLayer" instance=ExtResource("14_smpap")]

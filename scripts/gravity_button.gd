@@ -7,6 +7,7 @@ extends Area2D
 func _on_body_entered(body: Node2D) -> void:
 
 	if(body.is_in_group("player")):
+		MusicManager.gravButtonPressed()
 		animated_sprite.play("pressed")
 		if(gravity_change == "UP"):
 			print("button pressed : gravity UP")

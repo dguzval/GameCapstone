@@ -15,6 +15,7 @@ func _ready() -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
+		MusicManager.key_pickup()
 		is_claimed = true
 		animated_sprite.visible = false
 		call_deferred("_update_key_access")
