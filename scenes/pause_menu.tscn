@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://di68abiponrlg"]
+[gd_scene load_steps=18 format=3 uid="uid://di68abiponrlg"]
 
 [ext_resource type="Script" uid="uid://c28ulln4i4esp" path="res://scripts/pause_menu.gd" id="1_myx47"]
 [ext_resource type="Shader" uid="uid://b1aornhnpw4er" path="res://scripts/pause_menu.gdshader" id="1_n87rw"]
@@ -192,31 +192,6 @@ texture_margin_right = 2.0
 texture_margin_bottom = 2.0
 region_rect = Rect2(33, 1, 14, 14)
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_71k7c"]
-texture = ExtResource("4_5d2l8")
-texture_margin_left = 2.0
-texture_margin_top = 3.0
-texture_margin_right = 2.0
-texture_margin_bottom = 2.0
-region_rect = Rect2(1, 1, 14, 14)
-modulate_color = Color(1, 0.13333334, 0.13333334, 1)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cmnsq"]
-texture = ExtResource("4_5d2l8")
-texture_margin_left = 2.0
-texture_margin_top = 3.0
-texture_margin_right = 2.0
-texture_margin_bottom = 2.0
-region_rect = Rect2(1, 17, 14, 14)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ofnjo"]
-texture = ExtResource("4_5d2l8")
-texture_margin_left = 2.0
-texture_margin_top = 3.0
-texture_margin_right = 2.0
-texture_margin_bottom = 2.0
-region_rect = Rect2(1, 1, 14, 14)
-
 [node name="Pause_Menu" type="Control"]
 process_mode = 3
 layout_mode = 3
@@ -319,30 +294,9 @@ theme_override_font_sizes/font_size = 30
 text = "Game Paused"
 horizontal_alignment = 1
 
-[node name="Quit" type="Button" parent="."]
-custom_minimum_size = Vector2(240, 10)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -120.0
-offset_top = 44.0
-offset_right = 120.0
-offset_bottom = 72.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("4_7l7mv")
-theme_override_styles/normal = SubResource("StyleBoxTexture_71k7c")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_cmnsq")
-theme_override_styles/hover = SubResource("StyleBoxTexture_ofnjo")
-text = "Quit"
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="help" parent="CanvasLayer" instance=ExtResource("6_v4r4p")]
 
 [connection signal="pressed" from="Resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="Help" to="." method="_on_help_pressed"]
-[connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]

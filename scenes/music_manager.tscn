@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://bwxd1nwudlosd"]
+
+[ext_resource type="Script" uid="uid://2m5jx6w3c8ve" path="res://scripts/music_manager.gd" id="1_tn5dr"]
+[ext_resource type="AudioStream" uid="uid://cedj5fn7yogdw" path="res://assets/level_music.mp3" id="2_hetdf"]
+[ext_resource type="AudioStream" uid="uid://q3h8ua3425e" path="res://assets/exit_audio.mp3" id="3_jd6i5"]
+[ext_resource type="AudioStream" uid="uid://b35kcp6f4bm7a" path="res://assets/key_collect.mp3" id="4_yodp2"]
+[ext_resource type="AudioStream" uid="uid://cfe2fv0yjif6v" path="res://assets/gravity_button_press.mp3" id="5_xcw26"]
+
+[node name="Music_Manager" type="Node2D"]
+script = ExtResource("1_tn5dr")
+
+[node name="Background" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_hetdf")
+volume_db = -15.0
+bus = &"Music"
+
+[node name="Exit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_jd6i5")
+volume_db = -5.0
+
+[node name="Key" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_yodp2")
+volume_db = -5.0
+
+[node name="Gravity_Button" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_xcw26")
+volume_db = -5.0

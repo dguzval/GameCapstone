@@ -1,0 +1,30 @@
+[gd_scene load_steps=7 format=3 uid="uid://bir15cad4gxf"]
+
+[ext_resource type="Texture2D" uid="uid://dw61vpcqmacgr" path="res://assets/ui_graphics/1 Frames/Frame_07.png" id="1_d5o6i"]
+[ext_resource type="Texture2D" uid="uid://dri35p2mdoe5w" path="res://assets/ui_graphics/3 Icons/Icons/Icon_07.png" id="2_5b2kk"]
+[ext_resource type="Script" uid="uid://cwk1yxc2qgssm" path="res://scripts/pause_button.gd" id="3_5b2kk"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_6y8j0"]
+texture = ExtResource("1_d5o6i")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f44ey"]
+texture = ExtResource("1_d5o6i")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tkhyx"]
+texture = ExtResource("1_d5o6i")
+
+[node name="PauseButton" type="Button"]
+texture_filter = 1
+offset_left = 4.0
+offset_top = 2.0
+offset_right = 28.0
+offset_bottom = 26.0
+theme_override_styles/normal = SubResource("StyleBoxTexture_6y8j0")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_f44ey")
+theme_override_styles/hover = SubResource("StyleBoxTexture_tkhyx")
+icon = ExtResource("2_5b2kk")
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("3_5b2kk")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Capstone"
-run/main_scene="uid://bsi84nfsymb0v"
+run/main_scene="uid://bqymf58h3qttu"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -21,6 +21,7 @@ LevelState="*res://scripts/level_state.gd"
 Firebase="*res://addons/godot-firebase/firebase/firebase.tscn"
 FirebaseManager="*res://scripts/FirebaseManager.gd"
 RunTimer="*res://scripts/RunTimer.gd"
+MusicManager="*res://scenes/music_manager.tscn"
 
 [display]
 

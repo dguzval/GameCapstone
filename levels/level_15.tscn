@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dq2i4eh7sx5hw"]
+[gd_scene load_steps=14 format=3 uid="uid://dq2i4eh7sx5hw"]
 
 [ext_resource type="Texture2D" uid="uid://d0gloldhpxhx3" path="res://assets/sprites/Space Cave Tileset.png" id="1_xnqdl"]
 [ext_resource type="Texture2D" uid="uid://b0xcfhha4enuj" path="res://assets/sprites/SpaceStationAda/SpaceStation_Tileset.png" id="2_lwfs3"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://boncjvjlemw4w" path="res://scenes/background.tscn" id="5_jx20j"]
 [ext_resource type="PackedScene" uid="uid://q0iifjevlag6" path="res://scenes/teleporter.tscn" id="6_lwfs3"]
 [ext_resource type="PackedScene" uid="uid://di68abiponrlg" path="res://scenes/pause_menu.tscn" id="7_d2qfm"]
+[ext_resource type="PackedScene" uid="uid://bir15cad4gxf" path="res://scenes/pause_button.tscn" id="9_i1ncm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w0414"]
 texture = ExtResource("1_xnqdl")
@@ -406,3 +407,5 @@ landing_zone = NodePath("../Teleporter")
 
 [node name="Pause_Menu" parent="CanvasLayer" instance=ExtResource("7_d2qfm")]
 metadata/_edit_use_anchors_ = true
+
+[node name="PauseButton" parent="CanvasLayer" instance=ExtResource("9_i1ncm")]

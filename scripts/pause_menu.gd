@@ -38,20 +38,17 @@ func _on_help_pressed() -> void:
 	help_center.show()
 	help_center.pause()
 	
-	
+func _on_restart_pressed() -> void:
+	resume()
+	PhysicsServer2D.area_set_param(
+			get_viewport().find_world_2d().space,
+			PhysicsServer2D.AREA_PARAM_GRAVITY_VECTOR,
+			Vector2.DOWN
+		)
+	get_tree().reload_current_scene()
+	LevelState.reset_for_level()
 
 
-func _on_quit_pressed() -> void:
-	RunTimer.pause_run()
-	
-	if FirebaseManager:
-		FirebaseManager.on_game_paused()
-		
-	get_tree().paused = false
-	hide()
-	PhysicsServer2D.area_set_param(get_viewport().find_world_2d().space, PhysicsServer2D.AREA_PARAM_GRAVITY_VECTOR, Vector2.DOWN)
-	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
-	
 func _process(_delta: float):
 	testPause()
 	

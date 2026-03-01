@@ -1,7 +1,8 @@
-[gd_scene load_steps=21 format=3 uid="uid://dtr3ohuvqa1he"]
+[gd_scene load_steps=22 format=3 uid="uid://dtr3ohuvqa1he"]
 
 [ext_resource type="Texture2D" uid="uid://bbhvxsyc8bchr" path="res://assets/sprites/Purple Portal Sprite Sheet.png" id="1_l0aq0"]
 [ext_resource type="Script" uid="uid://qp6ypr1x2ndc" path="res://scripts/exit.gd" id="1_uyw7u"]
+[ext_resource type="AudioStream" uid="uid://q3h8ua3425e" path="res://assets/exit_audio.mp3" id="3_l5n14"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_24kvk"]
 atlas = ExtResource("1_l0aq0")
@@ -145,5 +146,10 @@ autoplay = "default"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 4)
 shape = SubResource("CapsuleShape2D_t1e13")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_l5n14")
+bus = &"SFX"
+area_mask = 2
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

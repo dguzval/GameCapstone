@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bqymf58h3qttu"]
+[gd_scene load_steps=21 format=3 uid="uid://bqymf58h3qttu"]
 
 [ext_resource type="Texture2D" uid="uid://d0gloldhpxhx3" path="res://assets/sprites/Space Cave Tileset.png" id="1_7ku3j"]
 [ext_resource type="Texture2D" uid="uid://b0xcfhha4enuj" path="res://assets/sprites/SpaceStationAda/SpaceStation_Tileset.png" id="2_b7fq7"]
@@ -7,6 +7,15 @@
 [ext_resource type="PackedScene" uid="uid://boncjvjlemw4w" path="res://scenes/background.tscn" id="5_gwceb"]
 [ext_resource type="PackedScene" uid="uid://dtr3ohuvqa1he" path="res://scenes/exit.tscn" id="5_s717a"]
 [ext_resource type="PackedScene" uid="uid://di68abiponrlg" path="res://scenes/pause_menu.tscn" id="6_btoec"]
+[ext_resource type="Texture2D" uid="uid://d1tlgqnrip4rb" path="res://assets/A.png" id="8_betor"]
+[ext_resource type="PackedScene" uid="uid://bir15cad4gxf" path="res://scenes/pause_button.tscn" id="8_bgw3c"]
+[ext_resource type="Texture2D" uid="uid://dbdxgu0fqwrni" path="res://assets/D.png" id="9_vjtdm"]
+[ext_resource type="Texture2D" uid="uid://dv12xyqh81qsu" path="res://assets/ARROWLEFT.png" id="10_bgw3c"]
+[ext_resource type="Texture2D" uid="uid://cccj5ymtcqdf3" path="res://assets/ARROWRIGHT.png" id="11_lrvbd"]
+[ext_resource type="Texture2D" uid="uid://cwaw2vi20ucyw" path="res://assets/SPACE.png" id="12_oqlok"]
+[ext_resource type="Texture2D" uid="uid://dn8v1sg8xmk0y" path="res://assets/W.png" id="13_7nvrk"]
+[ext_resource type="Texture2D" uid="uid://ta4pkor2by6s" path="res://assets/ARROWUP.png" id="14_jkxa6"]
+[ext_resource type="FontFile" uid="uid://p4sudry53o6x" path="res://assets/ui_graphics/10 Font/CyberpunkCraftpixPixel.otf" id="15_vjtdm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w0414"]
 texture = ExtResource("1_7ku3j")
@@ -380,13 +389,14 @@ layer_0/tile_data = PackedInt32Array(196608, 262145, 1342177281, 196609, 65537, 
 [node name="GameManager" type="Node2D" parent="."]
 
 [node name="Player" parent="." instance=ExtResource("4_da2lp")]
-position = Vector2(41, 35)
+position = Vector2(59, 46)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(255, -15)
 zoom = Vector2(1.5, 1.5)
 
 [node name="Background" parent="Camera2D" instance=ExtResource("5_gwceb")]
+texture_filter = 1
 
 [node name="Exit" parent="." instance=ExtResource("5_s717a")]
 position = Vector2(482, -91)
@@ -396,3 +406,64 @@ scale = Vector2(-1, 1)
 
 [node name="Pause_Menu" parent="CanvasLayer" instance=ExtResource("6_btoec")]
 metadata/_edit_use_anchors_ = true
+
+[node name="PauseButton" parent="CanvasLayer" instance=ExtResource("8_bgw3c")]
+
+[node name="A" type="Sprite2D" parent="."]
+position = Vector2(35, -68)
+texture = ExtResource("8_betor")
+
+[node name="D" type="Sprite2D" parent="."]
+position = Vector2(56, -68)
+texture = ExtResource("9_vjtdm")
+
+[node name="Arrowleft" type="Sprite2D" parent="."]
+position = Vector2(96.5, -68)
+texture = ExtResource("10_bgw3c")
+
+[node name="Arrowright" type="Sprite2D" parent="."]
+position = Vector2(117.5, -68)
+texture = ExtResource("11_lrvbd")
+
+[node name="Space" type="Sprite2D" parent="."]
+position = Vector2(170.99998, -69.00001)
+scale = Vector2(0.6641791, 0.9375)
+texture = ExtResource("12_oqlok")
+
+[node name="W" type="Sprite2D" parent="."]
+position = Vector2(45, -86)
+texture = ExtResource("13_7nvrk")
+
+[node name="Arrowup" type="Sprite2D" parent="."]
+position = Vector2(106.5, -86)
+texture = ExtResource("14_jkxa6")
+
+[node name="Label2" type="Label" parent="."]
+texture_filter = 1
+offset_left = 67.0
+offset_top = -92.0
+offset_right = 86.0
+offset_bottom = -78.0
+theme_override_fonts/font = ExtResource("15_vjtdm")
+theme_override_font_sizes/font_size = 13
+text = "OR"
+
+[node name="Label5" type="Label" parent="."]
+texture_filter = 1
+offset_left = 128.0
+offset_top = -93.0
+offset_right = 147.0
+offset_bottom = -79.0
+theme_override_fonts/font = ExtResource("15_vjtdm")
+theme_override_font_sizes/font_size = 13
+text = "OR"
+
+[node name="Label4" type="Label" parent="."]
+texture_filter = 1
+offset_left = 207.0
+offset_top = -123.0
+offset_right = 440.0
+offset_bottom = -89.0
+theme_override_fonts/font = ExtResource("15_vjtdm")
+theme_override_font_sizes/font_size = 32
+text = "gravity flip"

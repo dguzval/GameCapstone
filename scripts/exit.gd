@@ -5,6 +5,7 @@ var _transitioning := false
 @onready var player : CharacterBody2D = $"../Player"
 @onready var collision : CollisionShape2D = $CollisionShape2D
 @onready var animated_sprite : AnimatedSprite2D = $AnimatedSprite2D
+@onready var exit_audio : AudioStreamPlayer2D = $AudioStreamPlayer2D
 
 
 func _process(_delta: float) -> void:
@@ -17,12 +18,13 @@ func _on_body_entered(body: Node2D) -> void:
 	if _transitioning:
 		return
 	if body.is_in_group("player"):
+		MusicManager.exit_triggered()
 		_transitioning = true
 		var current_scene_file = get_tree().current_scene.scene_file_path
 		var next_level_number = current_scene_file.to_int() + 1
 		
 		LevelState.on_level_ended()
-		
+			
 		PhysicsServer2D.area_set_param(
 			get_viewport().find_world_2d().space,
 			PhysicsServer2D.AREA_PARAM_GRAVITY_VECTOR,
@@ -35,6 +37,7 @@ func _on_body_entered(body: Node2D) -> void:
 		call_deferred("_go_to_next_level", next_level_path, next_level_number)
 
 func _go_to_next_level(path: String, next_level_number: int) -> void:
+		
 	if ResourceLoader.exists(path):
 		get_tree().change_scene_to_file(path)
 	else:
