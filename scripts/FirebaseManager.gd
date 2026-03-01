@@ -98,13 +98,14 @@ func on_level_started(level_id: String) -> void:
 
 func on_level_ended(level_id: String) -> void:
 	if level_start_time_ms == 0:
+		print("Level with start time 0ms ended")
 		return
-
-	_log_event("level_ended", level_id)
 
 	var now_ms := Time.get_ticks_msec()
 	var delta_ms := now_ms - level_start_time_ms
 	var delta_sec := float(delta_ms) / 1000.0
+	
+	_log_event("level_ended", level_id, {"level_time_seconds": delta_sec})
 
 	level_start_time_ms = 0
 	overall_time_played_ms += max(delta_ms, 0)
@@ -224,6 +225,8 @@ func _write_open_event() -> void:
 func _log_event(event_type: String, level_id: String = "", extra: Dictionary = {}) -> void:
 	if device_ref == null or not _bootstrapped:
 		return
+
+	print("Logging event %s" % event_type)
 
 	var payload := {
 		"type": event_type,
