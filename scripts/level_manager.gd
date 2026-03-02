@@ -13,5 +13,4 @@ func _ready() -> void:
 	print("loading...")
 
 	var scene_path = FILE_BEGIN + str(LevelState.curr_level) + ".tscn"
-	LevelState.on_level_started(LevelState.curr_level)
-	get_tree().call_deferred("change_scene_to_file", scene_path)
+	LevelState.start_level_after_scene_change(scene_path, LevelState.curr_level)
