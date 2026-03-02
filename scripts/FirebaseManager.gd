@@ -21,10 +21,19 @@ var session_time_played_ms: int = 0
 var _session_active_since_ms: int = 0
 var _session_device_info: Dictionary = {}
 
+var _pending_level_start_id := ""
+var _pending_level_start_ms: int = 0
+
 var _timing_suspended := false
 var _close_logged := false
 
+var _js_pagehide_cb = null
+var _js_beforeunload_cb = null
+var _js_visibility_cb = null
+var _web_hooks_installed := false
+
 const DEVICE_ID_PATH := "user://device_id.txt"
+const RECOVERY_PATH := "user://firebase_progress_recovery.json"
 const _HEX := "0123456789abcdef"
 const GAME_VERSION := "v1.0"
 
@@ -40,11 +49,13 @@ func _ready() -> void:
 	Firebase.Auth.login_anonymous()
 
 	_flush_timer = Timer.new()
-	_flush_timer.wait_time = 20.0
+	_flush_timer.wait_time = 5.0 if OS.has_feature("web") else 20.0
 	_flush_timer.one_shot = false
 	_flush_timer.autostart = true
 	_flush_timer.timeout.connect(_flush_overall_time)
 	add_child(_flush_timer)
+
+	_install_web_lifecycle_hooks()
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
@@ -78,20 +89,29 @@ func _on_auth_fail(code: int, message: String) -> void:
 	push_error("AUTH FAIL %s: %s" % [code, message])
 
 func _on_progress_loaded(progress) -> void:
+	var local_recovery := _load_local_recovery_snapshot()
+
 	if progress == null:
 		print("No existing progress found for device ", device_id, " - starting fresh.")
+
+		overall_time_played_ms = int(local_recovery.get("overall_time_played_ms", 0))
+		session_time_played_ms = 0
 		_last_flush_overall_ms = overall_time_played_ms
-		_level_elapsed_ms = 0
+		current_level_id = str(local_recovery.get("current_level", ""))
+		_level_elapsed_ms = int(local_recovery.get("time_in_current_level_ms", 0))
+
 		_level_active_since_ms = 0
 		_overall_active_since_ms = 0
 		_session_active_since_ms = 0
-		_timing_suspended = false
+		_timing_suspended = (current_level_id != "")
 		_close_logged = false
+
 		_bootstrapped = true
 
 		_write_open_event()
 		_write_session_summary()
 		_write_progress_state()
+		_consume_pending_level_start()
 		return
 
 	if typeof(progress) != TYPE_DICTIONARY:
@@ -99,18 +119,31 @@ func _on_progress_loaded(progress) -> void:
 		_on_progress_failed()
 		return
 
-	var local_so_far := overall_time_played_ms
-	var remote := int(progress.get("overall_time_played_ms", 0))
+	var remote_overall := int(progress.get("overall_time_played_ms", 0))
+	var remote_level := str(progress.get("current_level", ""))
+	var remote_level_ms := int(progress.get("time_in_current_level_ms", 0))
+	var remote_last_seen := int(progress.get("last_seen_unix", 0))
 
-	overall_time_played_ms = remote + local_so_far
+	var local_overall := int(local_recovery.get("overall_time_played_ms", 0))
+	var local_level := str(local_recovery.get("current_level", ""))
+	var local_level_ms := int(local_recovery.get("time_in_current_level_ms", 0))
+	var local_last_seen := int(local_recovery.get("last_seen_unix", 0))
+
+	if local_last_seen > remote_last_seen:
+		overall_time_played_ms = max(remote_overall, local_overall)
+		current_level_id = local_level
+		_level_elapsed_ms = local_level_ms
+	else:
+		overall_time_played_ms = remote_overall
+		current_level_id = remote_level
+		_level_elapsed_ms = remote_level_ms
+
 	_last_flush_overall_ms = overall_time_played_ms
-
-	current_level_id = str(progress.get("current_level", ""))
-	_level_elapsed_ms = int(progress.get("time_in_current_level_ms", 0))
 
 	_level_active_since_ms = 0
 	_overall_active_since_ms = 0
 	_session_active_since_ms = 0
+	session_time_played_ms = 0
 	_timing_suspended = (current_level_id != "")
 	_close_logged = false
 
@@ -119,6 +152,7 @@ func _on_progress_loaded(progress) -> void:
 	_write_open_event()
 	_write_session_summary()
 	_write_progress_state()
+	_consume_pending_level_start()
 
 	print("RESTORED current_level=", current_level_id, " restored_level_ms=", _level_elapsed_ms)
 
@@ -132,12 +166,58 @@ func _on_progress_failed() -> void:
 	_session_active_since_ms = 0
 	_timing_suspended = false
 	_close_logged = false
+
 	_bootstrapped = true
 
 	_write_open_event()
 	_write_session_summary()
+	_consume_pending_level_start()
+
+func _consume_pending_level_start() -> void:
+	if _pending_level_start_id == "":
+		return
+
+	var pending_id := _pending_level_start_id
+	var preboot_ms: int = 0
+
+	if _pending_level_start_ms > 0:
+		preboot_ms = max(Time.get_ticks_msec() - _pending_level_start_ms, 0)
+
+	if current_level_id == pending_id:
+		_level_elapsed_ms += preboot_ms
+	else:
+		current_level_id = pending_id
+		_level_elapsed_ms = preboot_ms
+
+	overall_time_played_ms += preboot_ms
+	session_time_played_ms += preboot_ms
+
+	_pending_level_start_id = ""
+	_pending_level_start_ms = 0
+
+	_close_logged = false
+	_timing_suspended = false
+
+	_log_event("level_started", current_level_id, {
+		"restored_time_in_current_level_ms": _level_elapsed_ms
+	}, false, "level_started_after_bootstrap")
+
+	_resume_active_timing("level_started_after_bootstrap")
+	_write_progress_state()
 
 func on_level_started(level_id: String) -> void:
+	if not _bootstrapped:
+		current_level_id = level_id
+		_close_logged = false
+		_timing_suspended = false
+
+		if _pending_level_start_id != level_id:
+			_pending_level_start_id = level_id
+			_pending_level_start_ms = Time.get_ticks_msec()
+
+		print("Deferring level start until Firebase finishes loading for ", level_id)
+		return
+
 	if current_level_id == level_id and _is_timing_running():
 		print("Ignoring duplicate level start for ", level_id)
 		return
@@ -151,7 +231,7 @@ func on_level_started(level_id: String) -> void:
 
 	_log_event("level_started", level_id, {
 		"restored_time_in_current_level_ms": _level_elapsed_ms
-	})
+	}, false, "level_started")
 
 	_resume_active_timing("level_started")
 	_write_progress_state()
@@ -190,7 +270,8 @@ func on_level_ended(level_id: String) -> void:
 
 	_log_event("level_ended", level_id, {
 		"level_time_seconds": delta_sec,
-		"level_time_ms": delta_ms
+		"level_time_ms": delta_ms,
+		"time_in_current_level_ms": _level_elapsed_ms
 	})
 
 	if _bootstrapped and device_ref != null:
@@ -211,42 +292,50 @@ func on_level_ended(level_id: String) -> void:
 	_write_progress_state()
 
 func on_game_paused() -> void:
-	_log_event("pause", current_level_id)
 	_pause_active_timing("pause")
+	_log_event("pause", current_level_id, {
+		"time_in_current_level_ms": _level_elapsed_ms
+	})
 
 func on_game_resumed() -> void:
-	_log_event("unpause", current_level_id)
 	_resume_active_timing("unpause")
+	_log_event("unpause", current_level_id, {
+		"time_in_current_level_ms": _level_elapsed_ms
+	})
 
 func log_restart(level_id: String = "") -> void:
 	var lid := level_id
 	if lid == "":
 		lid = current_level_id
-	_log_event("restart", lid)
+	_log_event("restart", lid, {}, true, "after_restart_event")
 
 func log_key(level_id: String = "") -> void:
 	var lid := level_id
 	if lid == "":
 		lid = current_level_id
-	_log_event("key_collected", lid)
+	_log_event("key_collected", lid, {}, true, "after_key_event")
 
 func log_exit(level_id: String = "") -> void:
 	var lid := level_id
 	if lid == "":
 		lid = current_level_id
-	_log_event("level_complete", lid)
+	_log_event("level_complete", lid, {}, true, "after_level_complete_event")
 
 func log_pressed_gravity_button(gravity_change: String = "", level_id: String = "") -> void:
 	var lid := level_id
 	if lid == "":
 		lid = current_level_id
-	_log_event("pressed_gravity_button", lid, {"gravity_change": gravity_change})
+	_log_event("pressed_gravity_button", lid, {
+		"gravity_change": gravity_change
+	}, true, "after_gravity_button_event")
 
 func _flush_overall_time() -> void:
 	var was_running := _is_timing_running()
 
 	if was_running:
 		_checkpoint_active_timing()
+
+	_write_local_recovery_snapshot()
 
 	if not _bootstrapped or device_ref == null:
 		if was_running and current_level_id != "" and not _timing_suspended:
@@ -263,6 +352,8 @@ func _handle_window_close(reason: String) -> void:
 	_checkpoint_active_timing()
 	_timing_suspended = true
 
+	_write_local_recovery_snapshot()
+
 	if not _close_logged:
 		_close_logged = true
 		_log_event("close_page", current_level_id, {
@@ -270,7 +361,7 @@ func _handle_window_close(reason: String) -> void:
 			"time_in_current_level_ms": _level_elapsed_ms
 		})
 
-	_write_progress_state()
+		_write_progress_state()
 
 	print("CLOSE logged reason=", reason, " level=", current_level_id, " level_elapsed=", _level_elapsed_ms)
 
@@ -283,6 +374,8 @@ func _handle_focus_out() -> void:
 
 	_checkpoint_active_timing()
 	_timing_suspended = true
+
+	_write_local_recovery_snapshot()
 	_write_progress_state()
 
 	_log_event("app_hidden", current_level_id, {
@@ -350,6 +443,7 @@ func _is_timing_running() -> bool:
 
 func _write_progress_state() -> void:
 	if not _bootstrapped or device_ref == null:
+		_write_local_recovery_snapshot()
 		return
 
 	device_ref.update("progress", {
@@ -361,6 +455,7 @@ func _write_progress_state() -> void:
 	})
 	_last_flush_overall_ms = overall_time_played_ms
 
+	_write_local_recovery_snapshot()
 	_write_session_summary()
 
 func _write_initial_progress() -> void:
@@ -380,9 +475,16 @@ func _write_open_event() -> void:
 		"time_in_current_level_ms": _level_elapsed_ms
 	})
 
-func _log_event(event_type: String, level_id: String = "", extra: Dictionary = {}) -> void:
+func _log_event(event_type: String, level_id: String = "", extra: Dictionary = {}, checkpoint_first: bool = false, resume_reason: String = "resume_after_event") -> void:
 	if device_ref == null or not _bootstrapped:
 		return
+
+	var was_running := false
+
+	if checkpoint_first:
+		was_running = _is_timing_running()
+		if was_running:
+			_checkpoint_active_timing()
 
 	print("Logging event %s" % event_type)
 
@@ -397,11 +499,20 @@ func _log_event(event_type: String, level_id: String = "", extra: Dictionary = {
 		"game_version": GAME_VERSION
 	}
 
+	if checkpoint_first:
+		payload["time_in_current_level_ms"] = _level_elapsed_ms
+
 	for k in extra.keys():
 		payload[k] = extra[k]
 
 	var eid := _event_id()
 	device_ref.update("sessions/%s/events/%s" % [session_id, eid], payload)
+
+	if checkpoint_first:
+		_write_local_recovery_snapshot()
+
+	if checkpoint_first and was_running and current_level_id != "" and not _timing_suspended:
+		_resume_active_timing(resume_reason)
 
 func _get_web_host_platform() -> String:
 	if OS.has_feature("web_windows"):
@@ -415,7 +526,7 @@ func _get_web_host_platform() -> String:
 	if OS.has_feature("web_ios"):
 		return "ios"
 	return ""
-	
+
 func _collect_session_device_info() -> Dictionary:
 	var info := {
 		"runtime_platform": OS.get_name(),
@@ -473,6 +584,88 @@ func _write_session_summary() -> void:
 		"browser_platform": _session_device_info.get("browser_platform", ""),
 		"device_type": _session_device_info.get("device_type", "desktop")
 	})
+
+func _write_local_recovery_snapshot() -> void:
+	if not OS.is_userfs_persistent():
+		return
+
+	var data := {
+		"overall_time_played_ms": overall_time_played_ms,
+		"session_time_played_ms": session_time_played_ms,
+		"current_level": current_level_id,
+		"time_in_current_level_ms": _level_elapsed_ms,
+		"last_seen_unix": int(Time.get_unix_time_from_system()),
+		"session_id": session_id
+	}
+
+	var f := FileAccess.open(RECOVERY_PATH, FileAccess.WRITE)
+	if f == null:
+		return
+
+	f.store_string(JSON.stringify(data))
+	f.close()
+
+func _load_local_recovery_snapshot() -> Dictionary:
+	if not OS.is_userfs_persistent():
+		return {}
+
+	if not FileAccess.file_exists(RECOVERY_PATH):
+		return {}
+
+	var raw := FileAccess.get_file_as_string(RECOVERY_PATH)
+	if raw.strip_edges() == "":
+		return {}
+
+	var parsed = JSON.parse_string(raw)
+	if typeof(parsed) != TYPE_DICTIONARY:
+		return {}
+
+	return parsed
+
+func _clear_local_recovery_snapshot() -> void:
+	if not OS.is_userfs_persistent():
+		return
+
+	if FileAccess.file_exists(RECOVERY_PATH):
+		DirAccess.remove_absolute(RECOVERY_PATH)
+
+func _install_web_lifecycle_hooks() -> void:
+	if not OS.has_feature("web"):
+		return
+
+	if _web_hooks_installed:
+		return
+
+	var window = JavaScriptBridge.get_interface("window")
+	var document = JavaScriptBridge.get_interface("document")
+
+	if window == null or document == null:
+		return
+
+	_js_pagehide_cb = JavaScriptBridge.create_callback(_on_js_pagehide)
+	_js_beforeunload_cb = JavaScriptBridge.create_callback(_on_js_beforeunload)
+	_js_visibility_cb = JavaScriptBridge.create_callback(_on_js_visibility_change)
+
+	window.addEventListener("pagehide", _js_pagehide_cb)
+	window.addEventListener("beforeunload", _js_beforeunload_cb)
+	document.addEventListener("visibilitychange", _js_visibility_cb)
+
+	_web_hooks_installed = true
+
+func _on_js_pagehide(_args = []) -> void:
+	_handle_window_close("pagehide")
+
+func _on_js_beforeunload(_args = []) -> void:
+	_handle_window_close("beforeunload")
+
+func _on_js_visibility_change(_args = []) -> void:
+	var document = JavaScriptBridge.get_interface("document")
+	if document == null:
+		return
+
+	var state = str(document.visibilityState)
+	if state == "hidden":
+		_handle_focus_out()
 
 func _today_yyyy_mm_dd() -> String:
 	var d := Time.get_date_dict_from_system()
