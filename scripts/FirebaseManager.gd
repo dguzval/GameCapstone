@@ -77,7 +77,17 @@ func _on_auth_ok(auth_info: Dictionary) -> void:
 func _on_auth_fail(code: int, message: String) -> void:
 	push_error("AUTH FAIL %s: %s" % [code, message])
 
-func _on_progress_loaded(progress: Dictionary) -> void:
+func _on_progress_loaded(progress) -> void:
+	if progress == null:
+		print("No existing progress found for device ", device_id, " - starting fresh.")
+		_on_progress_failed()
+		return
+
+	if typeof(progress) != TYPE_DICTIONARY:
+		print("Unexpected progress type: ", typeof(progress), " value=", progress)
+		_on_progress_failed()
+		return
+
 	var local_so_far := overall_time_played_ms
 	var remote := int(progress.get("overall_time_played_ms", 0))
 
@@ -89,28 +99,37 @@ func _on_progress_loaded(progress: Dictionary) -> void:
 
 	_level_active_since_ms = 0
 	_overall_active_since_ms = 0
+	_session_active_since_ms = 0
 	_timing_suspended = (current_level_id != "")
 	_close_logged = false
 
 	_bootstrapped = true
 
 	_write_open_event()
-	_write_initial_progress()
+	_write_session_summary()
 
 	print("RESTORED current_level=", current_level_id, " restored_level_ms=", _level_elapsed_ms)
 
 func _on_progress_failed() -> void:
+	push_warning("Progress load failed or no progress exists; preserving remote progress by skipping initial progress write.")
+
 	_last_flush_overall_ms = overall_time_played_ms
 	_level_elapsed_ms = 0
 	_level_active_since_ms = 0
 	_overall_active_since_ms = 0
+	_session_active_since_ms = 0
 	_timing_suspended = false
 	_close_logged = false
 	_bootstrapped = true
+
 	_write_open_event()
-	_write_initial_progress()
+	_write_session_summary()
 
 func on_level_started(level_id: String) -> void:
+	if current_level_id == level_id and _is_timing_running():
+		print("Ignoring duplicate level start for ", level_id)
+		return
+
 	if current_level_id != level_id:
 		_level_elapsed_ms = 0
 
@@ -147,6 +166,7 @@ func on_level_ended(level_id: String) -> void:
 		_level_elapsed_ms = 0
 		_level_active_since_ms = 0
 		_overall_active_since_ms = 0
+		_session_active_since_ms = 0
 		_timing_suspended = false
 		_close_logged = false
 		_write_progress_state()
@@ -172,6 +192,7 @@ func on_level_ended(level_id: String) -> void:
 	_level_elapsed_ms = 0
 	_level_active_since_ms = 0
 	_overall_active_since_ms = 0
+	_session_active_since_ms = 0
 	_timing_suspended = false
 	_close_logged = false
 
@@ -240,6 +261,9 @@ func _handle_window_close(reason: String) -> void:
 	_write_progress_state()
 
 	print("CLOSE logged reason=", reason, " level=", current_level_id, " level_elapsed=", _level_elapsed_ms)
+
+	if not get_tree().is_auto_accept_quit():
+		get_tree().quit()
 
 func _handle_focus_out() -> void:
 	if current_level_id == "" and not _is_timing_running():
@@ -336,15 +360,6 @@ func _write_initial_progress() -> void:
 		"ts_unix": Time.get_unix_time_from_system(),
 		"last_uid": uid
 	})
-
-	device_ref.update("progress", {
-		"overall_time_played_ms": overall_time_played_ms,
-		"last_seen_unix": Time.get_unix_time_from_system(),
-		"session_id": session_id,
-		"current_level": current_level_id,
-		"time_in_current_level_ms": _level_elapsed_ms
-	})
-	_last_flush_overall_ms = overall_time_played_ms
 
 	_write_session_summary()
 
