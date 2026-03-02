@@ -32,10 +32,14 @@ var _js_beforeunload_cb = null
 var _js_visibility_cb = null
 var _web_hooks_installed := false
 
+var _app_is_hidden := false
+var _last_visibility_event_unix_ms: int = 0
+
 const DEVICE_ID_PATH := "user://device_id.txt"
 const RECOVERY_PATH := "user://firebase_progress_recovery.json"
 const _HEX := "0123456789abcdef"
 const GAME_VERSION := "v1.0"
+
 
 func _ready() -> void:
 	device_id = _get_or_create_device_id()
@@ -60,6 +64,9 @@ func _ready() -> void:
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		_handle_window_close("wm_close")
+
+	if OS.has_feature("web"):
+		return
 
 	if what == NOTIFICATION_APPLICATION_FOCUS_OUT:
 		_handle_focus_out()
@@ -369,8 +376,15 @@ func _handle_window_close(reason: String) -> void:
 		get_tree().quit()
 
 func _handle_focus_out() -> void:
-	if current_level_id == "" and not _is_timing_running():
+	if _app_is_hidden:
 		return
+
+	if current_level_id == "" and not _is_timing_running():
+		_app_is_hidden = true
+		return
+
+	_app_is_hidden = true
+	_last_visibility_event_unix_ms = Time.get_ticks_msec()
 
 	_checkpoint_active_timing()
 	_timing_suspended = true
@@ -385,6 +399,12 @@ func _handle_focus_out() -> void:
 	print("FOCUS OUT level=", current_level_id, " level_elapsed=", _level_elapsed_ms)
 
 func _handle_focus_in() -> void:
+	if not _app_is_hidden:
+		return
+
+	_app_is_hidden = false
+	_last_visibility_event_unix_ms = Time.get_ticks_msec()
+
 	if current_level_id == "":
 		return
 
@@ -664,8 +684,11 @@ func _on_js_visibility_change(_args = []) -> void:
 		return
 
 	var state = str(document.visibilityState)
+
 	if state == "hidden":
 		_handle_focus_out()
+	elif state == "visible":
+		_handle_focus_in()
 
 func _today_yyyy_mm_dd() -> String:
 	var d := Time.get_date_dict_from_system()
