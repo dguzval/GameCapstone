@@ -80,7 +80,18 @@ func _on_auth_fail(code: int, message: String) -> void:
 func _on_progress_loaded(progress) -> void:
 	if progress == null:
 		print("No existing progress found for device ", device_id, " - starting fresh.")
-		_on_progress_failed()
+		_last_flush_overall_ms = overall_time_played_ms
+		_level_elapsed_ms = 0
+		_level_active_since_ms = 0
+		_overall_active_since_ms = 0
+		_session_active_since_ms = 0
+		_timing_suspended = false
+		_close_logged = false
+		_bootstrapped = true
+
+		_write_open_event()
+		_write_session_summary()
+		_write_progress_state()
 		return
 
 	if typeof(progress) != TYPE_DICTIONARY:
@@ -107,11 +118,12 @@ func _on_progress_loaded(progress) -> void:
 
 	_write_open_event()
 	_write_session_summary()
+	_write_progress_state()
 
 	print("RESTORED current_level=", current_level_id, " restored_level_ms=", _level_elapsed_ms)
 
 func _on_progress_failed() -> void:
-	push_warning("Progress load failed or no progress exists; preserving remote progress by skipping initial progress write.")
+	push_warning("Progress load failed; preserving remote progress by skipping initial progress write.")
 
 	_last_flush_overall_ms = overall_time_played_ms
 	_level_elapsed_ms = 0

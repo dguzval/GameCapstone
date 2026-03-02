@@ -12,6 +12,11 @@ var plates_pressed: int = 0
 var curr_level: int = 1
 var loadedFile = false
 
+func start_level_after_scene_change(scene_path: String, level_number: int) -> void:
+	get_tree().call_deferred("change_scene_to_file", scene_path)
+	await get_tree().scene_changed
+	on_level_started(level_number)
+
 func save_progress():
 	var data = SceneData.new()
 	data.last_level_played = curr_level

@@ -38,19 +38,20 @@ func _on_body_entered(body: Node2D) -> void:
 
 func _go_to_next_level(path: String, next_level_number: int) -> void:
 	if ResourceLoader.exists(path):
+		LevelState.on_level_ended()
 		get_tree().change_scene_to_file(path)
+		call_deferred("_begin_next_level_after_scene_change", next_level_number)
 	else:
 		RunTimer.end_run()
 		LevelState.on_level_ended()
 		get_tree().change_scene_to_file("res://scenes/victory_page.tscn")
-	
-	LevelState.reset_for_level()
-	call_deferred("_start_next_level", next_level_number)
+		_transitioning = false
 
-func _start_next_level(next_level_number: int) -> void:
+func _begin_next_level_after_scene_change(next_level_number: int) -> void:
+	LevelState.reset_for_level()
 	LevelState.on_level_started(next_level_number)
 	_transitioning = false
-	
+
 func _update_locked_state() -> void:
 	call_deferred("_update_exit_access")
 	animated_sprite.visible = false
