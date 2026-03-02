@@ -1,5 +1,6 @@
 extends Node
 
+const save_location = "user://SaveFile.tres"
 var has_key: bool = false
 var key_required: bool = false
 var amount_key: int = 0
@@ -8,7 +9,27 @@ var plates_exists: bool = false
 var all_plates_pressed: bool = false
 var plate_amount: int = 0
 var plates_pressed: int = 0
-var curr_level: int = 0
+var curr_level: int = 1
+var loadedFile = false
+
+func save_progress():
+	var data = SceneData.new()
+	data.last_level_played = curr_level
+	data.elapsed_ms = RunTimer.get_elapsed_ms()
+	
+	ResourceSaver.save(data, save_location)
+	print("saved!")
+
+func load_progress():
+	if not ResourceLoader.exists(save_location):
+		return
+	
+	var data = ResourceLoader.load(save_location) as SceneData
+	curr_level = data.last_level_played
+	RunTimer.resume_from_elapsed(data.elapsed_ms)
+	print("loaded!")
+	loadedFile = true
+	
 
 
 func reset_for_level():
@@ -37,9 +58,11 @@ func on_level_started(level_id: int) -> void:
 	curr_level = level_id
 	if FirebaseManager:
 		FirebaseManager.on_level_started(str(level_id))
+	save_progress()
 
 func on_level_ended() -> void:
 	if FirebaseManager:
+		print("level ended. Update firebase")
 		FirebaseManager.on_level_ended(str(curr_level))
 
 func _notification(what: int) -> void:

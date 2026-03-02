@@ -37,7 +37,6 @@ func _on_body_entered(body: Node2D) -> void:
 		call_deferred("_go_to_next_level", next_level_path, next_level_number)
 
 func _go_to_next_level(path: String, next_level_number: int) -> void:
-		
 	if ResourceLoader.exists(path):
 		get_tree().change_scene_to_file(path)
 	else:
