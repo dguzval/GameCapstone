@@ -35,11 +35,13 @@ var _web_hooks_installed := false
 var _app_is_hidden := false
 var _last_visibility_event_unix_ms: int = 0
 
+# 0 is not assigned, 1 and 2 are a and b
+var ab_group: int = 0
+
 const DEVICE_ID_PATH := "user://device_id.txt"
 const RECOVERY_PATH := "user://firebase_progress_recovery.json"
 const _HEX := "0123456789abcdef"
 const GAME_VERSION := "v1.0"
-
 
 func _ready() -> void:
 	device_id = _get_or_create_device_id()
@@ -135,6 +137,10 @@ func _on_progress_loaded(progress) -> void:
 	var local_level := str(local_recovery.get("current_level", ""))
 	var local_level_ms := int(local_recovery.get("time_in_current_level_ms", 0))
 	var local_last_seen := int(local_recovery.get("last_seen_unix", 0))
+	
+	ab_group = int(local_recovery.get("ab_group", 0))
+	if ab_group == 0:
+		ab_group = randi_range(1, 2) # 1 or 2
 
 	if local_last_seen > remote_last_seen:
 		overall_time_played_ms = max(remote_overall, local_overall)
@@ -471,7 +477,8 @@ func _write_progress_state() -> void:
 		"last_seen_unix": Time.get_unix_time_from_system(),
 		"session_id": session_id,
 		"current_level": current_level_id,
-		"time_in_current_level_ms": _level_elapsed_ms
+		"time_in_current_level_ms": _level_elapsed_ms,
+		"ab_group": ab_group
 	})
 	_last_flush_overall_ms = overall_time_played_ms
 
@@ -615,7 +622,8 @@ func _write_local_recovery_snapshot() -> void:
 		"current_level": current_level_id,
 		"time_in_current_level_ms": _level_elapsed_ms,
 		"last_seen_unix": int(Time.get_unix_time_from_system()),
-		"session_id": session_id
+		"session_id": session_id,
+		"ab_group": ab_group
 	}
 
 	var f := FileAccess.open(RECOVERY_PATH, FileAccess.WRITE)
