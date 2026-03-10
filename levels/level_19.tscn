@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=4 uid="uid://djab05yqadrq2"]
+[gd_scene load_steps=44 format=4 uid="uid://djab05yqadrq2"]
 
 [ext_resource type="Texture2D" uid="uid://d0gloldhpxhx3" path="res://assets/sprites/Space Cave Tileset.png" id="1_y0yk7"]
 [ext_resource type="Texture2D" uid="uid://b0xcfhha4enuj" path="res://assets/sprites/SpaceStationAda/SpaceStation_Tileset.png" id="2_0f4ql"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://05cwhquogn7" path="res://scenes/baked_collisions.tscn" id="11_rcg8o"]
 [ext_resource type="PackedScene" uid="uid://di68abiponrlg" path="res://scenes/pause_menu.tscn" id="12_af8gj"]
 [ext_resource type="PackedScene" uid="uid://bir15cad4gxf" path="res://scenes/pause_button.tscn" id="14_alv4u"]
+[ext_resource type="PackedScene" uid="uid://cb76ymwmsuior" path="res://scenes/coin.tscn" id="15_sjkob"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w0414"]
 texture = ExtResource("1_y0yk7")
@@ -496,3 +497,18 @@ shape = SubResource("RectangleShape2D_jwq8y")
 metadata/_edit_use_anchors_ = true
 
 [node name="PauseButton" parent="CanvasLayer" instance=ExtResource("14_alv4u")]
+
+[node name="Coin" parent="." instance=ExtResource("15_sjkob")]
+position = Vector2(376, 93)
+
+[node name="Coin2" parent="." instance=ExtResource("15_sjkob")]
+position = Vector2(392, 29)
+
+[node name="Coin3" parent="." instance=ExtResource("15_sjkob")]
+position = Vector2(215, 76)
+
+[node name="Coin4" parent="." instance=ExtResource("15_sjkob")]
+position = Vector2(152, 13)
+
+[node name="Coin5" parent="." instance=ExtResource("15_sjkob")]
+position = Vector2(312, -36)
