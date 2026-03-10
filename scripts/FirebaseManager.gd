@@ -327,6 +327,12 @@ func log_key(level_id: String = "") -> void:
 	if lid == "":
 		lid = current_level_id
 	_log_event("key_collected", lid, {}, true, "after_key_event")
+	
+func log_coin(level_id: String = "") -> void:
+	var lid := level_id
+	if lid == "":
+		lid = current_level_id
+	_log_event("coin_collected", lid, {}, true, "after_coin_event")
 
 func log_exit(level_id: String = "") -> void:
 	var lid := level_id
