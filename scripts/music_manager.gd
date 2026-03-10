@@ -3,6 +3,7 @@ extends Node2D
 @onready var musicAudioStreamBM : AudioStreamPlayer2D = $Background
 @onready var exitSFX : AudioStreamPlayer2D = $Exit
 @onready var keySFX : AudioStreamPlayer2D = $Key
+@onready var coinSFX : AudioStreamPlayer2D = $Coin
 @onready var gravButtonSFX : AudioStreamPlayer2D = $Gravity_Button
 var backgroundMusicOn : bool = true
 
@@ -21,6 +22,9 @@ func exit_triggered():
 	
 func key_pickup():
 	keySFX.play()
+	
+func coin_pickup():
+	coinSFX.play()
 	
 func gravButtonPressed():
 	gravButtonSFX.play()

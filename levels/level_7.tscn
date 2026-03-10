@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://4vckasvhpdo5"]
+[gd_scene load_steps=16 format=3 uid="uid://4vckasvhpdo5"]
 
 [ext_resource type="Texture2D" uid="uid://d0gloldhpxhx3" path="res://assets/sprites/Space Cave Tileset.png" id="2_7a5qu"]
 [ext_resource type="Texture2D" uid="uid://b0xcfhha4enuj" path="res://assets/sprites/SpaceStationAda/SpaceStation_Tileset.png" id="3_fi4ef"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://di68abiponrlg" path="res://scenes/pause_menu.tscn" id="8_nyknj"]
 [ext_resource type="PackedScene" uid="uid://fu6rst85qduv" path="res://scenes/key.tscn" id="8_ou8n7"]
 [ext_resource type="PackedScene" uid="uid://bir15cad4gxf" path="res://scenes/pause_button.tscn" id="10_cicrg"]
+[ext_resource type="PackedScene" uid="uid://cb76ymwmsuior" path="res://scenes/coin.tscn" id="11_5cm8g"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w0414"]
 texture = ExtResource("2_7a5qu")
@@ -411,3 +412,12 @@ gravity_change = "DOWN"
 metadata/_edit_use_anchors_ = true
 
 [node name="PauseButton" parent="CanvasLayer" instance=ExtResource("10_cicrg")]
+
+[node name="Coin" parent="." instance=ExtResource("11_5cm8g")]
+position = Vector2(385, -16)
+
+[node name="Coin2" parent="." instance=ExtResource("11_5cm8g")]
+position = Vector2(407, -35)
+
+[node name="Coin3" parent="." instance=ExtResource("11_5cm8g")]
+position = Vector2(420, -58)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bqymf58h3qttu"]
+[gd_scene load_steps=22 format=3 uid="uid://bqymf58h3qttu"]
 
 [ext_resource type="Texture2D" uid="uid://d0gloldhpxhx3" path="res://assets/sprites/Space Cave Tileset.png" id="1_7ku3j"]
 [ext_resource type="Texture2D" uid="uid://b0xcfhha4enuj" path="res://assets/sprites/SpaceStationAda/SpaceStation_Tileset.png" id="2_b7fq7"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://dn8v1sg8xmk0y" path="res://assets/W.png" id="13_7nvrk"]
 [ext_resource type="Texture2D" uid="uid://ta4pkor2by6s" path="res://assets/ARROWUP.png" id="14_jkxa6"]
 [ext_resource type="FontFile" uid="uid://p4sudry53o6x" path="res://assets/ui_graphics/10 Font/CyberpunkCraftpixPixel.otf" id="15_vjtdm"]
+[ext_resource type="PackedScene" uid="uid://cb76ymwmsuior" path="res://scenes/coin.tscn" id="17_lrvbd"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w0414"]
 texture = ExtResource("1_7ku3j")
@@ -467,3 +468,18 @@ offset_bottom = -89.0
 theme_override_fonts/font = ExtResource("15_vjtdm")
 theme_override_font_sizes/font_size = 32
 text = "gravity flip"
+
+[node name="Coin" parent="." instance=ExtResource("17_lrvbd")]
+position = Vector2(342, -14)
+
+[node name="Coin2" parent="." instance=ExtResource("17_lrvbd")]
+position = Vector2(199, -4)
+
+[node name="Coin3" parent="." instance=ExtResource("17_lrvbd")]
+position = Vector2(135, 28)
+
+[node name="Coin4" parent="." instance=ExtResource("17_lrvbd")]
+position = Vector2(391, -34)
+
+[node name="Coin5" parent="." instance=ExtResource("17_lrvbd")]
+position = Vector2(425, -67)
