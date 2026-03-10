@@ -14,6 +14,8 @@ var curr_level: int = 1
 var loadedFile = false
 var save_data: SceneData
 
+var level_end_committed: bool = false
+
 func ensure_save_data() -> void:
 	if save_data == null:
 		save_data = SceneData.new()
@@ -29,9 +31,6 @@ func save_progress() -> void:
 	save_data.last_level_played = curr_level
 	save_data.elapsed_ms = RunTimer.get_elapsed_ms()
 
-	if curr_level >= 1:
-		save_data.level_times_ms[curr_level] = RunTimer.get_level_elapsed_ms()
-
 	var err := ResourceSaver.save(save_data, save_location)
 	if err == OK:
 		print("saved!")
@@ -41,11 +40,17 @@ func save_progress() -> void:
 func load_progress() -> void:
 	if not ResourceLoader.exists(save_location):
 		save_data = SceneData.new()
+		curr_level = 1
+		loadedFile = false
+		RunTimer.start_new_run()
 		return
 
 	save_data = ResourceLoader.load(save_location) as SceneData
 	if save_data == null:
 		save_data = SceneData.new()
+		curr_level = 1
+		loadedFile = false
+		RunTimer.start_new_run()
 		return
 
 	curr_level = save_data.last_level_played
@@ -77,6 +82,8 @@ func get_level() -> int:
 func on_level_started(level_id: int) -> void:
 	ensure_save_data()
 
+	level_end_committed = false
+	reset_for_level()
 	curr_level = level_id
 	RunTimer.start_level()
 
@@ -86,11 +93,15 @@ func on_level_started(level_id: int) -> void:
 func on_level_ended() -> void:
 	ensure_save_data()
 
+	if level_end_committed:
+		return
+
+	level_end_committed = true
 	RunTimer.pause_level()
 
 	save_data.level_times_ms[curr_level] = RunTimer.get_level_elapsed_ms()
-	save_data.last_level_played = curr_level + 1
 	save_data.elapsed_ms = RunTimer.get_elapsed_ms()
+	save_data.last_level_played = curr_level + 1
 
 	var err := ResourceSaver.save(save_data, save_location)
 	if err == OK:
