@@ -1,9 +1,10 @@
-[gd_scene load_steps=34 format=4 uid="uid://btfqeg2x4l2kl"]
+[gd_scene load_steps=36 format=4 uid="uid://btfqeg2x4l2kl"]
 
 [ext_resource type="Texture2D" uid="uid://d0gloldhpxhx3" path="res://assets/sprites/Space Cave Tileset.png" id="1_7cvan"]
 [ext_resource type="Texture2D" uid="uid://b0xcfhha4enuj" path="res://assets/sprites/SpaceStationAda/SpaceStation_Tileset.png" id="2_hkmvn"]
 [ext_resource type="Texture2D" uid="uid://ddtdnhc0bcksb" path="res://assets/sprites/SpaceStationAda/SpaceStation_Objects.png" id="3_88jk3"]
 [ext_resource type="PackedScene" uid="uid://bwd1lp5fanqat" path="res://scenes/player.tscn" id="4_4lif8"]
+[ext_resource type="PackedScene" uid="uid://eb0ynckvyx4i" path="res://scenes/highlighted_platform.tscn" id="4_ync3p"]
 [ext_resource type="PackedScene" uid="uid://dtr3ohuvqa1he" path="res://scenes/exit.tscn" id="5_2uvf5"]
 [ext_resource type="PackedScene" uid="uid://boncjvjlemw4w" path="res://scenes/background.tscn" id="5_i6a6o"]
 [ext_resource type="PackedScene" uid="uid://fu6rst85qduv" path="res://scenes/key.tscn" id="6_y6st2"]
@@ -14,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://di68abiponrlg" path="res://scenes/pause_menu.tscn" id="11_e3ou2"]
 [ext_resource type="PackedScene" uid="uid://bir15cad4gxf" path="res://scenes/pause_button.tscn" id="13_byrje"]
 [ext_resource type="PackedScene" uid="uid://cb76ymwmsuior" path="res://scenes/coin.tscn" id="14_4ggxg"]
+[ext_resource type="PackedScene" uid="uid://ctroqeol6r2kg" path="res://scenes/highlighted_arrow.tscn" id="16_qc56q"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_iywne"]
 texture = ExtResource("1_7cvan")
@@ -315,6 +317,9 @@ tile_map_data = PackedByteArray("AAAAAPb/AQABAAEAAAABAPb/AQABAAEAAAACAPb/AQABAAE
 tile_set = SubResource("TileSet_uwrxv")
 collision_visibility_mode = 1
 
+[node name="highlighted_platform" parent="TileMap" instance=ExtResource("4_ync3p")]
+tile_map_data = PackedByteArray("AAAFAPn/AAACAAIAAAAEAPn/AAABAAIAAAAFAPj/AAADAAAAAAAIAP7/AAAFAAEAAAAJAP7/AAAFAAEAAAAKAP7/AAAFAAEAAAAQAPz/AAAFAAEAADARAPz/AAAFAAEAADASAPz/AAAFAAEAADAGAAUAAAABAAAAAAAHAAUAAAABAAAAAAAGAPj/AAABAAIAAAAHAPj/AAABAAIAAAAIAPj/AAABAAIAAAAJAPj/AAABAAIAAAAKAPj/AAABAAIAAAALAPj/AAABAAIAAAAMAPj/AAABAAIAAAANAPj/AAABAAIAAAAOAPj/AAAEAAAAAAAOAPn/AAAAAAIAAAAUAPn/AAABAAIAAAAVAPn/AAABAAIAAAA=")
+
 [node name="GameManager" type="Node2D" parent="."]
 
 [node name="Player" parent="." instance=ExtResource("4_4lif8")]
@@ -432,3 +437,14 @@ position = Vector2(88, -85)
 
 [node name="Coin5" parent="." instance=ExtResource("14_4ggxg")]
 position = Vector2(159, 78)
+
+[node name="highlighted_arrow" parent="." instance=ExtResource("16_qc56q")]
+position = Vector2(69, -4)
+
+[node name="highlighted_arrow2" parent="." instance=ExtResource("16_qc56q")]
+position = Vector2(218, -59)
+rotation = 2.417281
+
+[node name="highlighted_arrow3" parent="." instance=ExtResource("16_qc56q")]
+position = Vector2(300, 17.999985)
+rotation = 1.5707964
