@@ -41,7 +41,7 @@ var ab_group: int = 0
 const DEVICE_ID_PATH := "user://device_id.txt"
 const RECOVERY_PATH := "user://firebase_progress_recovery.json"
 const _HEX := "0123456789abcdef"
-const GAME_VERSION := "v1.0"
+const GAME_VERSION := "v3.0"
 
 func _ready() -> void:
 	device_id = _get_or_create_device_id()
@@ -333,6 +333,12 @@ func log_coin(level_id: String = "") -> void:
 	if lid == "":
 		lid = current_level_id
 	_log_event("coin_collected", lid, {}, true, "after_coin_event")
+	
+func log_hint(level_id: String = "") -> void:
+	var lid := level_id
+	if lid == "":
+		lid = current_level_id
+	_log_event("hint provided", lid, {}, true, "after_hint_event")
 
 func log_exit(level_id: String = "") -> void:
 	var lid := level_id

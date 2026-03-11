@@ -26,6 +26,7 @@ func _watch_for_hint() -> void:
 		var elapsed_ms := RunTimer.get_level_elapsed_ms()
 
 		if elapsed_ms >= _baseline_ms * threshold_ratio:
+			FirebaseManager.log_hint()
 			_has_triggered = true
 			await _flash_three_times()
 
