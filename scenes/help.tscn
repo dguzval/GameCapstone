@@ -403,10 +403,9 @@ theme_override_font_sizes/font_size = 13
 theme_override_styles/normal = SubResource("StyleBoxEmpty_jlusn")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_0ylyn")
 theme_override_styles/read_only = SubResource("StyleBoxEmpty_3yy26")
-text = "Save - save a game hit save in the
- main menu. 
-load - to load your saved run, 
- hit load before hitting play. 
+text = "AutoSave - If you want to leave the 
+game don't worry, when you rejoin
+you'll load back in on this level.
 
 KEYBINDS:
 A / Left Arrow -  Left
@@ -416,9 +415,7 @@ R - Restart Level
 esc - Pause
 
 Goal: 
-You are a lost traveler aboard 
-various space ships, you need to
-take over the ship to escape!
+You are trying to navigate across a space station. Reach the end as fast as you can and see if you can solve the puzzles
 
 Created by:
 David Guzman Valente

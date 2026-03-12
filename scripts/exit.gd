@@ -55,7 +55,7 @@ func _begin_next_level_after_scene_change(next_level_number: int) -> void:
 func _update_locked_state() -> void:
 	call_deferred("_update_exit_access")
 	animated_sprite.visible = false
-	# If we just transitioned from locked -> unlocked, pop up + animate once	
+	# If we just transitioned from locked -> unlocked, pop up + animate once
 	if LevelState.has_key:
 		print("unlocked gate")
 		animated_sprite.visible = true

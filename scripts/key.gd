@@ -18,11 +18,15 @@ func _on_body_entered(body: Node2D) -> void:
 		MusicManager.key_pickup()
 		is_claimed = true
 		animated_sprite.visible = false
+		print("pickup key")
+		print("keys amount", LevelState.key_acquired)
+		print("keys required", LevelState.key_required)
 		FirebaseManager.log_key()
 		call_deferred("_update_key_access")
 		LevelState.update_key_count()
 		
 		if(LevelState.has_key):
+			print("open portal")
 			exit._update_locked_state()
 		
 func _update_key_access(): 

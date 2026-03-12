@@ -83,7 +83,6 @@ func on_level_started(level_id: int) -> void:
 	ensure_save_data()
 
 	level_end_committed = false
-	reset_for_level()
 	curr_level = level_id
 	RunTimer.start_level()
 
@@ -112,6 +111,8 @@ func on_level_ended() -> void:
 	if FirebaseManager:
 		print("level ended. Update firebase")
 		FirebaseManager.on_level_ended(str(curr_level))
+
+	reset_for_level()
 
 func record_restart() -> void:
 	ensure_save_data()
